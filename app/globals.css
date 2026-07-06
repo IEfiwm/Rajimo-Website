@@ -295,14 +295,25 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Marquee animations */
-@keyframes marqueeLeft {
+/* Marquee — seamless infinite loop (2 copies, 50% shift) */
+@keyframes marqueeInfinite {
   from { transform: translateX(0); }
-  to   { transform: translateX(-33.333%); }
+  to { transform: translateX(-50%); }
 }
-@keyframes marqueeRight {
-  from { transform: translateX(-33.333%); }
-  to   { transform: translateX(0); }
+
+@keyframes marqueeInfiniteRtl {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+.marquee-ltr {
+  animation: marqueeInfinite 36s linear infinite;
+  will-change: transform;
+}
+
+.marquee-rtl {
+  animation: marqueeInfiniteRtl 36s linear infinite;
+  will-change: transform;
 }
 
 /* Persian / RTL typography */
@@ -329,10 +340,6 @@ html[data-locale="fa"] h3 {
 
 html[data-locale="fa"] .font-pixel:not(.brand-mark) {
   font-family: var(--font-primary);
-}
-
-html[data-locale="fa"] .marquee-track {
-  animation: marqueeRight 28s linear infinite;
 }
 
 /* Persian: stronger weights for readability */

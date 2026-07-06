@@ -93,6 +93,19 @@ export const content = {
         },
       ],
     },
+    about: {
+      tag: "درباره ما",
+      title: "از تجربه تا ساختن",
+      paragraphs: [
+        "راجیمو از تجربه ما در طراحی محصول، توسعه نرم‌افزار و حل مسائل واقعی کسب‌وکار شکل گرفت.",
+        "ما این مسیر را با یک هدف مشترک شروع کردیم: ساخت فناوری‌هایی که فقط کار نکنند، بلکه به رشد کسب‌وکارها کمک کنند.",
+        "امروز در راجیمو روی محصول، سیستم‌های سازمانی، هوش مصنوعی و اتوماسیون تمرکز داریم تا برای مشتریان ارزش واقعی و پایدار ایجاد کنیم.",
+      ],
+      founders: [
+        { name: "Amir Jalilvand", role: "Co-Founder", image: "/images/founder-amir.png" },
+        { name: "Erfan Shayegh", role: "Founder", image: "/images/founder-erfan.png" },
+      ],
+    },
     process: {
       tag: "فرآیند همکاری",
       title: "رویکرد ما برای\nساخت محصولات موفق",
@@ -116,7 +129,7 @@ export const content = {
         description: "معماری آماده برای رشد آینده و افزایش حجم عملیات.",
       },
       items: [
-        "هتل و مهمان‌نوازی",
+        "هتل و مهمانداری",
         "عمده‌فروشی و خرده‌فروشی",
         "خدمات مالی",
         "کافه و رستوران",
@@ -200,20 +213,57 @@ export const content = {
       ],
     },
     liveFeed: {
-      projects: [
-        "سیستم عمده‌فروشی — گزارش‌گیری",
-        "پلتفرم هتل — مدیریت مهمانان",
-        "پلتفرم معاملاتی — پردازش سفارش",
-        "رستوران — تحلیل فروش",
-        "اتوماسیون — فرآیند انبار",
-        "هوش مصنوعی — تحلیل داده",
-      ],
-      regions: ["تهران", "اصفهان", "شیراز", "مشهد", "تبریز"],
-      statuses: [
-        { label: "در حال اجرا", color: "#4ade80" },
-        { label: "در حال اجرا", color: "#4ade80" },
-        { label: "تکمیل", color: "#60a5fa" },
-        { label: "در صف", color: "#facc15" },
+      items: [
+        {
+          name: "داریک",
+          description: "پلتفرم معاملات فلزات گران‌بها",
+          status: { label: "فعال", color: "#60a5fa" },
+        },
+        {
+          name: "ارسی انیمه",
+          description: "پلتفرم استریم انیمه",
+          status: { label: "در حال اجرا", color: "#4ade80" },
+        },
+        {
+          name: "آی تی اداری",
+          description: "وبسایت فروش ماشین‌آلات اداری",
+          status: { label: "فعال", color: "#60a5fa" },
+        },
+        {
+          name: "ولورا",
+          description: "سیستم ERP",
+          status: { label: "در حال اجرا", color: "#4ade80" },
+        },
+        {
+          name: "ارسی انیمه",
+          description: "بات تلگرام",
+          status: { label: "فعال", color: "#60a5fa" },
+        },
+        {
+          name: "دنیای سونی",
+          description: "وبسایت فروش محصولات سونی",
+          status: { label: "فعال", color: "#60a5fa" },
+        },
+        {
+          name: "سرخ",
+          description: "وبسایت فروش زعفران",
+          status: { label: "فعال", color: "#60a5fa" },
+        },
+        {
+          name: "آتی سازان",
+          description: "وبسایت شرکتی در حوزه معماری",
+          status: { label: "در حال اجرا", color: "#4ade80" },
+        },
+        {
+          name: "اوکیش",
+          description: "پلتفرم خدمات به ایرانیان خارج از کشور",
+          status: { label: "متوقف شده", color: "#9ca3af" },
+        },
+        {
+          name: "لومورا",
+          description: "پلتفرم رشد فروش کافه و رستوران‌ها مبتنی بر هوش مصنوعی",
+          status: { label: "در حال اجرا", color: "#4ade80" },
+        },
       ],
     },
   },
@@ -307,6 +357,19 @@ export const content = {
             { v: "Sales", l: "Growth" },
           ],
         },
+      ],
+    },
+    about: {
+      tag: "About Us",
+      title: "From Experience\nto Building",
+      paragraphs: [
+        "Rajimo was shaped by our experience in product design, software development, and solving real business problems.",
+        "We started this journey with a shared goal: building technology that doesn't just work, but helps businesses grow.",
+        "Today at Rajimo, we focus on products, enterprise systems, AI, and automation to create real, lasting value for our clients.",
+      ],
+      founders: [
+        { name: "Amir Jalilvand", role: "Co-Founder", image: "/images/founder-amir.png" },
+        { name: "Erfan Shayegh", role: "Founder", image: "/images/founder-erfan.png" },
       ],
     },
     process: {
@@ -416,20 +479,57 @@ export const content = {
       ],
     },
     liveFeed: {
-      projects: [
-        "Wholesale system — reporting",
-        "Hotel platform — guest management",
-        "Trading platform — order processing",
-        "Restaurant — sales analysis",
-        "Automation — warehouse workflow",
-        "AI — data analysis",
-      ],
-      regions: ["Tehran", "Isfahan", "Shiraz", "Mashhad", "Tabriz"],
-      statuses: [
-        { label: "running", color: "#4ade80" },
-        { label: "running", color: "#4ade80" },
-        { label: "complete", color: "#60a5fa" },
-        { label: "queued", color: "#facc15" },
+      items: [
+        {
+          name: "Daric",
+          description: "Precious metals trading platform",
+          status: { label: "Active", color: "#60a5fa" },
+        },
+        {
+          name: "Arsi Anime",
+          description: "Anime streaming platform",
+          status: { label: "In progress", color: "#4ade80" },
+        },
+        {
+          name: "IT Edari",
+          description: "Office equipment sales website",
+          status: { label: "Active", color: "#60a5fa" },
+        },
+        {
+          name: "Velora",
+          description: "ERP system",
+          status: { label: "In progress", color: "#4ade80" },
+        },
+        {
+          name: "Arsi Anime",
+          description: "Telegram bot",
+          status: { label: "Active", color: "#60a5fa" },
+        },
+        {
+          name: "Donyaye Sony",
+          description: "Sony products sales website",
+          status: { label: "Active", color: "#60a5fa" },
+        },
+        {
+          name: "Sorkh",
+          description: "Saffron sales website",
+          status: { label: "Active", color: "#60a5fa" },
+        },
+        {
+          name: "Ati Sazan",
+          description: "Corporate website for architecture",
+          status: { label: "In progress", color: "#4ade80" },
+        },
+        {
+          name: "Okayesh",
+          description: "Services platform for Iranians abroad",
+          status: { label: "Stopped", color: "#9ca3af" },
+        },
+        {
+          name: "Lumora",
+          description: "AI-powered cafe & restaurant sales growth platform",
+          status: { label: "In progress", color: "#4ade80" },
+        },
       ],
     },
   },

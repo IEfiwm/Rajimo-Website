@@ -107,8 +107,8 @@ export default function RajimoPage() {
 
   const feedLabels =
     locale === "fa"
-      ? { project: "پروژه", task: "وظیفه", region: "شهر", status: "وضعیت" }
-      : { project: "PROJECT", task: "TASK", region: "CITY", status: "STATUS" }
+      ? { project: "پروژه", description: "شرح پروژه", status: "وضعیت" }
+      : { project: "PROJECT", description: "DESCRIPTION", status: "STATUS" }
 
   return (
     <div className="bg-[#F5F4F0] text-[#111] min-h-screen font-sans antialiased" dir={t.dir}>
@@ -286,6 +286,51 @@ export default function RajimoPage() {
         </div>
       </section>
 
+      {/* ABOUT / FOUNDERS */}
+      <section id="about" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-16">
+            <div className="mt-4"><Tag>{t.about.tag}</Tag></div>
+            <RevealText locale={locale} className="mt-5 text-4xl md:text-5xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
+              {t.about.title}
+            </RevealText>
+            <div className="mt-8 space-y-5 max-w-2xl">
+              {t.about.paragraphs.map((paragraph) => (
+                <p key={paragraph} className="text-sm md:text-base text-black/45 leading-relaxed">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {t.about.founders.map((founder, i) => (
+              <BentoCard key={founder.name} className="overflow-hidden p-0" delay={i * 80}>
+                <div className="relative aspect-[4/5] overflow-hidden bg-black/[0.03]">
+                  <img
+                    src={founder.image}
+                    alt={founder.name}
+                    className="w-full h-full object-cover object-top"
+                  />
+                  <div
+                    className="absolute inset-x-0 bottom-0 h-1/3 pointer-events-none"
+                    style={{
+                      background: "linear-gradient(to top, rgba(245,244,240,0.95) 0%, transparent 100%)",
+                    }}
+                  />
+                </div>
+                <div className="px-6 pb-6 pt-4 -mt-2 relative z-10">
+                  <h3 className="text-lg font-light text-[#111]">{founder.name}</h3>
+                  <p className={`text-xs text-black/40 mt-1 ${locale === "en" ? "font-pixel tracking-widest" : ""}`}>
+                    {founder.role}
+                  </p>
+                </div>
+              </BentoCard>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* PROCESS */}
       <section id="workflow" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] overflow-hidden">
         <div className="max-w-6xl mx-auto">
@@ -417,8 +462,8 @@ export default function RajimoPage() {
 
       {/* INDUSTRIES MARQUEE */}
       <section className="py-0 border-t border-black/[0.06] overflow-hidden select-none">
-        <div className="flex border-b border-black/[0.06] marquee-track" style={{ animation: locale === "fa" ? undefined : "marqueeLeft 28s linear infinite" }}>
-          {[...Array(3)].map((_, rep) => (
+        <div className={`flex w-max border-b border-black/[0.06] ${locale === "fa" ? "marquee-rtl" : "marquee-ltr"}`}>
+          {[0, 1].map((rep) => (
             <div key={rep} className="flex shrink-0">
               {t.industries.items.map((cap) => (
                 <div key={`${rep}-${cap}`} className="flex items-center gap-6 px-10 py-5 border-e border-black/[0.06] shrink-0">
@@ -443,11 +488,11 @@ export default function RajimoPage() {
               </RevealText>
               <p className="mt-6 text-base text-black/40 leading-relaxed max-w-sm">{t.whyUs.description}</p>
               <div className="mt-10 flex items-end gap-2">
-                <LiveAgentCounter locale={locale} />
+                <LiveAgentCounter locale={locale} count={5} />
                 <span className="text-black/30 text-sm mb-1 tracking-wide">{t.whyUs.feedCounter}</span>
               </div>
             </div>
-            <LiveAgentFeed feed={t.liveFeed} labels={feedLabels} locale={locale} />
+            <LiveAgentFeed items={t.liveFeed.items} labels={feedLabels} locale={locale} />
           </div>
         </div>
       </section>
