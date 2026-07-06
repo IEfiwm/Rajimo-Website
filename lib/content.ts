@@ -206,6 +206,7 @@ export const content = {
     },
     footer: {
       copyright: "© ۱۴۰۵ راجیمو. تمامی حقوق محفوظ است.",
+      versionLabel: "نسخه",
       links: [
         { label: "حریم خصوصی", href: "#" },
         { label: "شرایط", href: "#" },
@@ -472,6 +473,7 @@ export const content = {
     },
     footer: {
       copyright: "© 2025 Rajimo. All rights reserved.",
+      versionLabel: "Version",
       links: [
         { label: "Privacy", href: "#" },
         { label: "Terms", href: "#" },
