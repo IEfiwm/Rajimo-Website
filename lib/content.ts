@@ -6,11 +6,9 @@ export const content = {
     lang: "fa",
     brand: "RAJIMO",
     nav: [
-      { label: "راهکارها", href: "#platform" },
-      { label: "محصولات", href: "#agents" },
-      { label: "فرآیند", href: "#workflow" },
-      { label: "صنایع", href: "#integrations" },
-      { label: "تماس", href: "#contact" },
+      { label: "راهکارها", href: "/solutions/" },
+      { label: "پروژه‌های ما", href: "/projects/" },
+      { label: "تماس با ما", href: "/contact/" },
     ],
     navCta: "شروع همکاری",
     hero: {
@@ -31,24 +29,29 @@ export const content = {
       description:
         "هر کسب‌وکاری با چالش‌های متفاوتی روبه‌رو است. ما با طراحی و توسعه راهکارهای دیجیتال متناسب با نیاز هر کسب‌وکار، به بهبود عملکرد و افزایش بهره‌وری کمک می‌کنیم.",
       featured: {
+        slug: "custom-software",
         title: "توسعه نرم‌افزارهای اختصاصی",
         description:
           "طراحی و توسعه وب‌سایت‌ها، اپلیکیشن‌ها، پلتفرم‌های SaaS و سیستم‌های اختصاصی متناسب با نیاز کسب‌وکار شما.",
       },
       items: [
         {
+          slug: "automation",
           title: "اتوماسیون و هوشمندسازی",
           description: "کاهش فعالیت‌های تکراری و بهبود فرآیندهای داخلی با ابزارهای هوشمند.",
         },
         {
+          slug: "product-design",
           title: "طراحی محصول دیجیتال",
           description: "طراحی تجربه‌های کاربری کاربردی و مقیاس‌پذیر برای کاربران و کسب‌وکار.",
         },
         {
+          slug: "ai",
           title: "راهکارهای هوش مصنوعی",
           description: "تحلیل، تصمیم‌سازی، خودکارسازی فرآیندها و افزایش بهره‌وری.",
         },
       ],
+      viewAll: "مشاهده همه راهکارها",
     },
     products: {
       tag: "محصولات",
@@ -91,19 +94,6 @@ export const content = {
             { v: "رشد", l: "فروش" },
           ],
         },
-      ],
-    },
-    about: {
-      tag: "درباره ما",
-      title: "از تجربه تا ساختن",
-      paragraphs: [
-        "راجیمو از تجربه ما در طراحی محصول، توسعه نرم‌افزار و حل مسائل واقعی کسب‌وکار شکل گرفت.",
-        "ما این مسیر را با یک هدف مشترک شروع کردیم: ساخت فناوری‌هایی که فقط کار نکنند، بلکه به رشد کسب‌وکارها کمک کنند.",
-        "امروز در راجیمو روی محصول، سیستم‌های سازمانی، هوش مصنوعی و اتوماسیون تمرکز داریم تا برای مشتریان ارزش واقعی و پایدار ایجاد کنیم.",
-      ],
-      founders: [
-        { name: "Amir Jalilvand", role: "Co-Founder", image: "/images/founder-amir.png" },
-        { name: "Erfan Shayegh", role: "Founder", image: "/images/founder-erfan.png" },
       ],
     },
     process: {
@@ -194,6 +184,36 @@ export const content = {
         },
       ],
     },
+    contact: {
+      tag: "تماس با ما",
+      title: "با ما در ارتباط باشید",
+      description:
+        "برای مشاوره، همکاری یا پرسیدن سوال درباره پروژه‌تان، فرم زیر را پر کنید یا مستقیم با ما تماس بگیرید.",
+      email: "contact@rajimo.ir",
+      phones: ["+989127215825", "+989128501931"],
+      emailLabel: "ایمیل",
+      phoneLabel: "شماره تماس",
+      backHome: "بازگشت به صفحه اصلی",
+      form: {
+        name: { label: "نام", placeholder: "نام و نام خانوادگی" },
+        contact: { label: "ایمیل یا شماره موبایل", placeholder: "۰۹۱۲۱۲۳۴۵۶۷ یا example@email.com" },
+        field: { label: "حوزه کاری", placeholder: "مثلاً هتلداری، فروشگاه آنلاین، فین‌تک..." },
+        message: {
+          label: "توضیحات پروژه",
+          placeholder: "اگر مایلید، درباره پروژه یا نیاز خود بیشتر توضیح دهید...",
+          optional: "اختیاری",
+        },
+        submit: "ارسال درخواست",
+        sending: "در حال ارسال...",
+        success: "پیام شما ثبت شد. به زودی با شما تماس می‌گیریم.",
+        error: "ارسال با خطا مواجه شد. لطفاً دوباره تلاش کنید یا مستقیم تماس بگیرید.",
+        validation: {
+          name: "لطفاً نام خود را وارد کنید.",
+          contact: "لطفاً ایمیل یا شماره موبایل را وارد کنید.",
+          field: "لطفاً حوزه کاری خود را وارد کنید.",
+        },
+      },
+    },
     cta: {
       title: "شروع کنیم؟",
       description:
@@ -210,7 +230,7 @@ export const content = {
       links: [
         { label: "حریم خصوصی", href: "#" },
         { label: "شرایط", href: "#" },
-        { label: "تماس", href: "#contact" },
+        { label: "تماس با ما", href: "/contact/" },
       ],
     },
     liveFeed: {
@@ -273,11 +293,9 @@ export const content = {
     lang: "en",
     brand: "RAJIMO",
     nav: [
-      { label: "Solutions", href: "#platform" },
-      { label: "Products", href: "#agents" },
-      { label: "Process", href: "#workflow" },
-      { label: "Industries", href: "#integrations" },
-      { label: "Contact", href: "#contact" },
+      { label: "Solutions", href: "/solutions/" },
+      { label: "Our Projects", href: "/projects/" },
+      { label: "Contact Us", href: "/contact/" },
     ],
     navCta: "Start Collaboration",
     hero: {
@@ -298,24 +316,29 @@ export const content = {
       description:
         "Every business faces different challenges. We design and develop digital solutions tailored to each business need to improve performance and productivity.",
       featured: {
+        slug: "custom-software",
         title: "Custom Software Development",
         description:
           "Design and development of websites, applications, SaaS platforms, and custom systems tailored to your business needs.",
       },
       items: [
         {
+          slug: "automation",
           title: "Automation & Intelligence",
           description: "Reduce repetitive activities and improve internal processes with smart tools.",
         },
         {
+          slug: "product-design",
           title: "Digital Product Design",
           description: "Practical and scalable user experiences for users and business goals.",
         },
         {
+          slug: "ai",
           title: "AI Solutions",
           description: "Analysis, decision-making, process automation, and productivity enhancement.",
         },
       ],
+      viewAll: "View all solutions",
     },
     products: {
       tag: "Products",
@@ -358,19 +381,6 @@ export const content = {
             { v: "Sales", l: "Growth" },
           ],
         },
-      ],
-    },
-    about: {
-      tag: "About Us",
-      title: "From Experience\nto Building",
-      paragraphs: [
-        "Rajimo was shaped by our experience in product design, software development, and solving real business problems.",
-        "We started this journey with a shared goal: building technology that doesn't just work, but helps businesses grow.",
-        "Today at Rajimo, we focus on products, enterprise systems, AI, and automation to create real, lasting value for our clients.",
-      ],
-      founders: [
-        { name: "Amir Jalilvand", role: "Co-Founder", image: "/images/founder-amir.png" },
-        { name: "Erfan Shayegh", role: "Founder", image: "/images/founder-erfan.png" },
       ],
     },
     process: {
@@ -461,6 +471,36 @@ export const content = {
         },
       ],
     },
+    contact: {
+      tag: "Contact Us",
+      title: "Get in Touch",
+      description:
+        "For consultation, collaboration, or questions about your project, fill out the form below or reach us directly.",
+      email: "contact@rajimo.ir",
+      phones: ["+989127215825", "+989128501931"],
+      emailLabel: "Email",
+      phoneLabel: "Mobile",
+      backHome: "Back to home",
+      form: {
+        name: { label: "Name", placeholder: "Your full name" },
+        contact: { label: "Email or mobile", placeholder: "example@email.com or +98 912 123 4567" },
+        field: { label: "Business field", placeholder: "e.g. hospitality, e-commerce, fintech..." },
+        message: {
+          label: "Project details",
+          placeholder: "Tell us more about your project or needs if you'd like...",
+          optional: "optional",
+        },
+        submit: "Send request",
+        sending: "Sending...",
+        success: "Your message has been sent. We'll be in touch soon.",
+        error: "Something went wrong. Please try again or contact us directly.",
+        validation: {
+          name: "Please enter your name.",
+          contact: "Please enter an email or mobile number.",
+          field: "Please enter your business field.",
+        },
+      },
+    },
     cta: {
       title: "Let's Start?",
       description:
@@ -477,7 +517,7 @@ export const content = {
       links: [
         { label: "Privacy", href: "#" },
         { label: "Terms", href: "#" },
-        { label: "Contact", href: "#contact" },
+        { label: "Contact Us", href: "/contact/" },
       ],
     },
     liveFeed: {
@@ -538,3 +578,11 @@ export const content = {
 } as const
 
 export type SiteContent = (typeof content)[Locale]
+
+export function arrowBack(locale: Locale) {
+  return locale === "fa" ? "→" : "←"
+}
+
+export function arrowForward(locale: Locale) {
+  return locale === "fa" ? "←" : "→"
+}

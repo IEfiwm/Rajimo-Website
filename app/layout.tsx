@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { Courier_Prime } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ibmPlexSans } from '@/lib/fonts'
+import { localeBootstrapScript } from '@/lib/locale-storage'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -28,21 +29,8 @@ export const metadata: Metadata = {
     description: "From idea to growth, we build your digital infrastructure.",
   },
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: [{ url: "/icon-light-32x32.png", sizes: "32x32", type: "image/png" }],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
   },
 }
 
@@ -54,6 +42,7 @@ export default function RootLayout({
   return (
     <html lang="fa" data-locale="fa" suppressHydrationWarning className={ibmPlexSans.variable}>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: localeBootstrapScript }} />
         <link
           rel="preload"
           href="/fonts/yekan-bakh-fanum/Yekan_Bakh_Fanum_Light.woff"

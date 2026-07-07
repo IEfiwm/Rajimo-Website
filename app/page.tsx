@@ -1,57 +1,16 @@
 "use client"
 
-import React, { useRef, useEffect, useState, useCallback } from "react"
+import React, { useEffect, useState, useCallback } from "react"
 import { IntroAnimation } from "@/components/intro-animation"
 import { PixelIcon } from "@/components/pixel-icon"
 import { LiveAgentFeed, LiveAgentCounter } from "@/components/live-agent-feed"
 import { RevealText } from "@/components/reveal-text"
-import { StackingAgentCards } from "@/components/stacking-agent-cards"
 import { MobileNav } from "@/components/mobile-nav"
 import { DevExSection } from "@/components/devex-section"
-import { content, type Locale } from "@/lib/content"
-import { APP_VERSION } from "@/lib/version"
-
-function useInView(threshold = 0.15) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [inView, setInView] = useState(false)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true) }, { threshold })
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [threshold])
-  return { ref, inView }
-}
-
-function BentoCard({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
-  const { ref, inView } = useInView(0.1)
-  return (
-    <div
-      ref={ref}
-      className={`group relative rounded-2xl border border-black/[0.07] bg-white overflow-hidden transition-all duration-700 hover:border-black/[0.15] hover:bg-[#fafaf8] ${className}`}
-      style={{
-        opacity: inView ? 1 : 0,
-        transform: inView ? "translateY(0)" : "translateY(28px)",
-        transition: `opacity 0.7s ease ${delay}ms, transform 0.7s ease ${delay}ms, border-color 0.3s ease, background-color 0.3s ease`,
-      }}
-    >
-      <div
-        className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{ background: "radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0,0,0,0.03), transparent 60%)" }}
-      />
-      {children}
-    </div>
-  )
-}
-
-function Tag({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] tracking-widest font-sans text-black/40 bg-black/[0.04]">
-      {children}
-    </span>
-  )
-}
+import { BentoCard, Tag } from "@/components/bento-card"
+import { SiteFooter } from "@/components/site-footer"
+import { useLocale } from "@/components/use-locale"
+import { arrowForward } from "@/lib/content"
 
 const WORKFLOW_IMAGES = [
   "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/define-5aafAmGBrxZpOqJ3XLHY3n3qzC2I5K.png",
@@ -61,11 +20,10 @@ const WORKFLOW_IMAGES = [
 ]
 
 export default function RajimoPage() {
-  const [locale, setLocale] = useState<Locale>("fa")
+  const { locale, toggleLocale, t } = useLocale()
   const [introDone, setIntroDone] = useState(false)
   const [heroReady, setHeroReady] = useState(false)
   const [videoReady, setVideoReady] = useState(false)
-  const t = content[locale]
 
   const handleIntroDone = useCallback(() => {
     setIntroDone(true)
@@ -93,12 +51,6 @@ export default function RajimoPage() {
     }
   }, [introDone])
 
-  useEffect(() => {
-    document.documentElement.lang = t.lang
-    document.documentElement.dir = t.dir
-    document.documentElement.dataset.locale = locale
-  }, [locale, t])
-
   const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = e.currentTarget
     const rect = el.getBoundingClientRect()
@@ -123,7 +75,7 @@ export default function RajimoPage() {
           pointerEvents: introDone ? "auto" : "none",
         }}
       >
-      <MobileNav content={t} locale={locale} onToggleLocale={() => setLocale((l) => (l === "fa" ? "en" : "fa"))} />
+      <MobileNav content={t} locale={locale} onToggleLocale={toggleLocale} />
 
       {/* HERO */}
       <section className="relative h-screen overflow-hidden">
@@ -180,10 +132,10 @@ export default function RajimoPage() {
               transition: "opacity 0.8s cubic-bezier(0.16,1,0.3,1) 180ms, transform 0.8s cubic-bezier(0.16,1,0.3,1) 180ms",
             }}
           >
-            <a href="#contact" className="px-6 py-3 bg-[#111] text-white text-sm rounded-xl hover:bg-[#333] transition-colors tracking-wide">
+            <a href="/contact/" className="px-6 py-3 bg-[#111] text-white text-sm rounded-xl hover:bg-[#333] transition-colors tracking-wide">
               {t.hero.cta1}
             </a>
-            <a href="#platform" className="px-6 py-3 border border-black/15 text-black/70 text-sm rounded-xl hover:border-black/30 hover:text-black transition-colors tracking-wide bg-white/50">
+            <a href="/solutions/" className="px-6 py-3 border border-black/15 text-black/70 text-sm rounded-xl hover:border-black/30 hover:text-black transition-colors tracking-wide bg-white/50">
               {t.hero.cta2}
             </a>
           </div>
@@ -222,112 +174,58 @@ export default function RajimoPage() {
           </div>
 
           <div className="grid grid-cols-12 gap-3" onMouseMove={handleMouse}>
-            <BentoCard className="col-span-12 p-8 min-h-[200px] flex flex-col justify-between relative overflow-hidden" delay={0}>
-              <img
-                src="/images/arc.png"
-                alt=""
-                aria-hidden="true"
-                className="absolute inset-0 w-full h-full object-cover opacity-75"
-                style={{
-                  objectPosition: "center 70%",
-                  transform: locale === "fa" ? "scaleX(-1)" : "none",
-                  filter: "blur(2px)",
-                }}
-              />
-              <div
-                className="absolute inset-0"
-                style={{
-                  maskImage: "linear-gradient(to bottom, transparent 30%, black 100%)",
-                  WebkitMaskImage: "linear-gradient(to bottom, transparent 30%, black 100%)",
-                  backdropFilter: "blur(20px)",
-                  WebkitBackdropFilter: "blur(20px)",
-                }}
-              />
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: "linear-gradient(to bottom, transparent 20%, rgba(245,244,240,0.45) 45%, rgba(245,244,240,0.82) 62%, rgba(245,244,240,0.97) 78%, rgb(245,244,240) 100%)",
-                }}
-              />
-              <div className="relative z-10">
-                <h3 className="text-xl font-light mb-3">{t.solutions.featured.title}</h3>
-                <p className="text-sm text-black/45 leading-relaxed max-w-lg">{t.solutions.featured.description}</p>
-              </div>
-            </BentoCard>
+            <a href="/solutions/custom-software/" className="col-span-12 block">
+              <BentoCard className="p-8 min-h-[200px] flex flex-col justify-between relative overflow-hidden h-full" delay={0}>
+                <img
+                  src="/images/arc.png"
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 w-full h-full object-cover opacity-75"
+                  style={{
+                    objectPosition: "center 70%",
+                    transform: locale === "fa" ? "scaleX(-1)" : "none",
+                    filter: "blur(2px)",
+                  }}
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    maskImage: "linear-gradient(to bottom, transparent 30%, black 100%)",
+                    WebkitMaskImage: "linear-gradient(to bottom, transparent 30%, black 100%)",
+                    backdropFilter: "blur(20px)",
+                    WebkitBackdropFilter: "blur(20px)",
+                  }}
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: "linear-gradient(to bottom, transparent 20%, rgba(245,244,240,0.45) 45%, rgba(245,244,240,0.82) 62%, rgba(245,244,240,0.97) 78%, rgb(245,244,240) 100%)",
+                  }}
+                />
+                <div className="relative z-10">
+                  <h3 className="text-xl font-light mb-3">{t.solutions.featured.title}</h3>
+                  <p className="text-sm text-black/45 leading-relaxed max-w-lg">{t.solutions.featured.description}</p>
+                </div>
+              </BentoCard>
+            </a>
 
             {t.solutions.items.map((item, i) => (
-              <BentoCard key={item.title} className="col-span-12 md:col-span-4 p-8 min-h-[200px]" delay={120 + i * 40}>
-                <h3 className="text-lg font-light mb-2">{item.title}</h3>
-                <p className="text-sm text-black/45 leading-relaxed">{item.description}</p>
-              </BentoCard>
+              <a key={item.slug} href={`/solutions/${item.slug}/`} className="col-span-12 md:col-span-4 block">
+                <BentoCard className="p-8 min-h-[200px] h-full" delay={120 + i * 40}>
+                  <h3 className="text-lg font-light mb-2">{item.title}</h3>
+                  <p className="text-sm text-black/45 leading-relaxed">{item.description}</p>
+                </BentoCard>
+              </a>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* PRODUCTS */}
-      <section id="agents" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
-        <div className="max-w-6xl mx-auto">
-          <div className={`mb-16 ${locale === "en" ? "flex flex-col md:flex-row md:items-end md:justify-between gap-8" : ""}`}>
-            <div>
-              <PixelIcon type="agents" size={40} />
-              <div className="mt-4"><Tag>{t.products.tag}</Tag></div>
-              <RevealText locale={locale} className="mt-5 text-4xl md:text-5xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
-                {t.products.title}
-              </RevealText>
-              {locale === "fa" && (
-                <p className="mt-6 text-sm text-black/45 leading-relaxed max-w-2xl">{t.products.side}</p>
-              )}
-            </div>
-            {locale === "en" && (
-              <p className="text-sm text-black/45 leading-relaxed max-w-xs">{t.products.side}</p>
-            )}
-          </div>
-          <StackingAgentCards items={t.products.items} />
-        </div>
-      </section>
-
-      {/* ABOUT / FOUNDERS */}
-      <section id="about" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-16">
-            <div className="mt-4"><Tag>{t.about.tag}</Tag></div>
-            <RevealText locale={locale} className="mt-5 text-4xl md:text-5xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
-              {t.about.title}
-            </RevealText>
-            <div className="mt-8 space-y-5 max-w-2xl">
-              {t.about.paragraphs.map((paragraph) => (
-                <p key={paragraph} className="text-sm md:text-base text-black/45 leading-relaxed">
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {t.about.founders.map((founder, i) => (
-              <BentoCard key={founder.name} className="overflow-hidden p-0" delay={i * 80}>
-                <div className="relative aspect-[4/5] overflow-hidden bg-black/[0.03]">
-                  <img
-                    src={founder.image}
-                    alt={founder.name}
-                    className="w-full h-full object-cover object-top"
-                  />
-                  <div
-                    className="absolute inset-x-0 bottom-0 h-1/3 pointer-events-none"
-                    style={{
-                      background: "linear-gradient(to top, rgba(245,244,240,0.95) 0%, transparent 100%)",
-                    }}
-                  />
-                </div>
-                <div className="px-6 pb-6 pt-4 -mt-2 relative z-10">
-                  <h3 className="text-lg font-light text-[#111]">{founder.name}</h3>
-                  <p className={`text-xs text-black/40 mt-1 ${locale === "en" ? "font-pixel tracking-widest" : ""}`}>
-                    {founder.role}
-                  </p>
-                </div>
-              </BentoCard>
-            ))}
+          <div className="mt-8 text-center">
+            <a
+              href="/solutions/"
+              className="inline-block text-sm text-black/45 hover:text-black transition-colors tracking-wide"
+            >
+              {t.solutions.viewAll} {arrowForward(locale)}
+            </a>
           </div>
         </div>
       </section>
@@ -528,7 +426,7 @@ export default function RajimoPage() {
                   ))}
                 </ul>
                 <a
-                  href="#contact"
+                  href="/contact/"
                   className={`block w-full py-3 rounded-xl text-sm tracking-widest transition-all duration-200 text-center ${
                     plan.highlight ? "bg-[#111] text-white hover:bg-[#333]" : "border border-black/10 text-black/60 hover:border-black/25 hover:text-black hover:bg-black/[0.04]"
                   }`}
@@ -553,51 +451,17 @@ export default function RajimoPage() {
           </h2>
           <p className="text-sm text-black/45 leading-relaxed mb-10">{t.cta.description}</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a href="mailto:hello@rajimo.ir" className="px-8 py-3 bg-[#111] text-white text-sm rounded-xl hover:bg-[#333] transition-colors tracking-widest font-medium">
+            <a href="/contact/" className="px-8 py-3 bg-[#111] text-white text-sm rounded-xl hover:bg-[#333] transition-colors tracking-widest font-medium">
               {t.cta.button1}
             </a>
-            <a href="mailto:info@rajimo.ir" className="px-8 py-3 border border-black/15 text-black/70 text-sm rounded-xl hover:border-black/30 hover:text-black transition-colors tracking-widest bg-white/50">
-              {t.cta.button2}
+            <a href={`mailto:${t.contact.email}`} className="px-8 py-3 border border-black/15 text-black/70 text-sm rounded-xl hover:border-black/30 hover:text-black transition-colors tracking-widest bg-white/50" dir="ltr">
+              {t.contact.email}
             </a>
           </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="py-10 px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-          <span className="brand-mark font-pixel text-xs tracking-[0.25em] text-black/50">{t.brand}</span>
-          <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
-            {t.nav.map((l) => (
-              <a key={l.href} href={l.href} className="text-xs text-black/35 hover:text-black/70 transition-colors tracking-widest">
-                {l.label}
-              </a>
-            ))}
-          </div>
-          <div className="flex items-center gap-6">
-            {t.footer.links.map((l) => (
-              <a key={l.label} href={l.href} className="text-xs text-black/25 hover:text-black/55 transition-colors tracking-widest">
-                {l.label}
-              </a>
-            ))}
-          </div>
-        </div>
-        <div className="max-w-6xl mx-auto mt-8 pt-6 border-t border-black/[0.04] flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <span className="text-xs text-black/20">{t.footer.copyright}</span>
-          <div
-            className="inline-flex items-center gap-2.5 self-start sm:self-auto px-3.5 py-1.5 rounded-full border border-black/[0.07] bg-white/40"
-            style={{ backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-black/15 shrink-0" />
-            <span className="text-[10px] text-black/30">{t.footer.versionLabel}</span>
-            <span
-              className={`text-[10px] text-black/50 tabular-nums ${locale === "en" ? "font-pixel tracking-[0.2em]" : "font-sans"}`}
-            >
-              v{APP_VERSION}
-            </span>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter locale={locale} />
       </div>
     </div>
   )

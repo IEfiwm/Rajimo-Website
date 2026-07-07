@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import type { SiteContent } from "@/lib/content"
+import { BrandLogo } from "@/components/brand-logo"
 
 type MobileNavProps = {
   content: SiteContent
@@ -27,7 +28,7 @@ export function MobileNav({ content, locale, onToggleLocale }: MobileNavProps) {
           className="flex items-center justify-between px-5 py-3 rounded-2xl border border-black/[0.06]"
           style={NAV_STYLE}
         >
-          <span className="brand-mark font-pixel text-xs tracking-[0.25em] text-black/70">{content.brand}</span>
+          <BrandLogo />
 
           <div className="hidden md:flex items-center gap-7 font-sans">
             {content.nav.map((l) => (
@@ -50,7 +51,7 @@ export function MobileNav({ content, locale, onToggleLocale }: MobileNavProps) {
             </button>
 
             <a
-              href="#contact"
+              href="/contact/"
               className="text-[11px] px-4 py-2 rounded-xl border border-black/10 text-black/60 hover:text-black hover:border-black/20 hover:bg-black/[0.03] transition-all duration-200 tracking-wide hidden md:block font-sans"
             >
               {content.navCta}
@@ -94,7 +95,7 @@ export function MobileNav({ content, locale, onToggleLocale }: MobileNavProps) {
             ))}
             <div className="mt-1 px-2 pb-1">
               <a
-                href="#contact"
+                href="/contact/"
                 onClick={close}
                 className="block w-full text-center text-[11px] px-4 py-2.5 rounded-xl border border-black/10 text-black/60 hover:text-black hover:border-black/20 hover:bg-black/[0.03] transition-all duration-200 tracking-wide font-sans"
               >
