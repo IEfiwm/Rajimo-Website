@@ -78,7 +78,7 @@ export default function RajimoPage() {
       <MobileNav content={t} locale={locale} onToggleLocale={toggleLocale} />
 
       {/* HERO */}
-      <section className="relative h-screen overflow-hidden">
+      <section className="relative h-[100svh] min-h-[640px] overflow-hidden">
         <video
           autoPlay
           loop
@@ -97,11 +97,11 @@ export default function RajimoPage() {
         <div className="absolute inset-x-0 bottom-0 z-10 pointer-events-none" style={{ height: "38%", backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)", maskImage: "linear-gradient(to top, black 0%, transparent 100%)", WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 100%)" }} />
         <div className="absolute inset-x-0 bottom-0 z-10 pointer-events-none" style={{ height: "55%", backdropFilter: "blur(2px)", WebkitBackdropFilter: "blur(2px)", maskImage: "linear-gradient(to top, black 0%, transparent 100%)", WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 100%)" }} />
 
-        <div className="h-20" />
+        <div className="h-12 md:h-20" />
 
-        <div className="absolute inset-x-0 bottom-0 z-30 flex flex-col px-6 md:px-12 pb-12 max-w-4xl">
+        <div className="absolute inset-x-0 bottom-0 z-30 flex flex-col px-4 sm:px-6 md:px-12 pb-8 sm:pb-10 md:pb-12 max-w-4xl text-center md:text-start items-center md:items-start">
           <h1
-            className="text-5xl sm:text-6xl md:text-7xl font-light text-[#111] leading-[1.05] tracking-tight mb-6 whitespace-pre-line"
+            className="text-4xl sm:text-5xl md:text-7xl font-light text-[#111] leading-[1.05] tracking-tight mb-4 sm:mb-6 whitespace-pre-line"
             style={{
               opacity: heroReady ? 1 : 0,
               filter: heroReady ? "blur(0px)" : "blur(24px)",
@@ -113,7 +113,7 @@ export default function RajimoPage() {
           </h1>
 
           <p
-            className="text-base md:text-lg text-black/50 leading-relaxed max-w-2xl mb-8"
+            className="text-sm sm:text-base md:text-lg text-black/50 leading-relaxed max-w-2xl mb-6 sm:mb-8 mx-auto md:mx-0"
             style={{
               opacity: heroReady ? 1 : 0,
               filter: heroReady ? "blur(0px)" : "blur(12px)",
@@ -125,22 +125,22 @@ export default function RajimoPage() {
           </p>
 
           <div
-            className="flex flex-wrap gap-3 mb-10"
+            className="flex flex-col sm:flex-row sm:flex-wrap gap-3 mb-8 sm:mb-10"
             style={{
               opacity: heroReady ? 1 : 0,
               transform: heroReady ? "translateY(0px)" : "translateY(12px)",
               transition: "opacity 0.8s cubic-bezier(0.16,1,0.3,1) 180ms, transform 0.8s cubic-bezier(0.16,1,0.3,1) 180ms",
             }}
           >
-            <a href="/contact/" className="px-6 py-3 bg-[#111] text-white text-sm rounded-xl hover:bg-[#333] transition-colors tracking-wide">
+            <a href="/contact/" className="w-full sm:w-auto px-6 py-3 bg-[#111] text-white text-sm rounded-xl hover:bg-[#333] transition-colors tracking-wide text-center">
               {t.hero.cta1}
             </a>
-            <a href="/solutions/" className="px-6 py-3 border border-black/15 text-black/70 text-sm rounded-xl hover:border-black/30 hover:text-black transition-colors tracking-wide bg-white/50">
+            <a href="/solutions/" className="w-full sm:w-auto px-6 py-3 border border-black/15 text-black/70 text-sm rounded-xl hover:border-black/30 hover:text-black transition-colors tracking-wide bg-white/50 text-center">
               {t.hero.cta2}
             </a>
           </div>
 
-          <div className="flex gap-8 sm:gap-12">
+          <div className="flex flex-wrap justify-center md:justify-start gap-x-6 gap-y-4 sm:gap-10">
             {t.hero.stats.map((stat, i) => (
               <div
                 key={stat.label}
@@ -151,7 +151,7 @@ export default function RajimoPage() {
                   transition: `opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${240 + i * 80}ms, filter 0.8s cubic-bezier(0.16,1,0.3,1) ${240 + i * 80}ms, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${240 + i * 80}ms`,
                 }}
               >
-                <div className="text-3xl sm:text-4xl text-[#111] font-light tracking-tight">
+                <div className="text-2xl sm:text-4xl text-[#111] font-light tracking-tight">
                   {stat.value}
                 </div>
                 <div className="text-xs text-black/40 tracking-widest uppercase mt-1">{stat.label}</div>
@@ -162,20 +162,20 @@ export default function RajimoPage() {
       </section>
 
       {/* SOLUTIONS */}
-      <section id="platform" className="py-32 px-6 md:px-12 lg:px-20">
+      <section id="platform" className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20">
         <div className="max-w-6xl mx-auto">
-          <div className="mb-16">
+          <div className="mb-16 text-center md:text-start">
             <PixelIcon type="platform" size={40} />
-            <div className="mt-4"><Tag>{t.solutions.tag}</Tag></div>
-            <RevealText locale={locale} className="mt-5 text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
+            <div className="mt-4 flex justify-center md:justify-start"><Tag>{t.solutions.tag}</Tag></div>
+            <RevealText locale={locale} className="mt-5 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
               {t.solutions.title}
             </RevealText>
-            <p className="mt-6 text-sm text-black/45 leading-relaxed max-w-2xl">{t.solutions.description}</p>
+            <p className="mt-6 text-sm text-black/45 leading-relaxed max-w-2xl mx-auto md:mx-0">{t.solutions.description}</p>
           </div>
 
           <div className="grid grid-cols-12 gap-3" onMouseMove={handleMouse}>
             <a href="/solutions/custom-software/" className="col-span-12 block">
-              <BentoCard className="p-8 min-h-[200px] flex flex-col justify-between relative overflow-hidden h-full" delay={0}>
+              <BentoCard className="p-6 sm:p-8 min-h-[200px] flex flex-col justify-between relative overflow-hidden h-full" delay={0}>
                 <img
                   src="/images/arc.png"
                   alt=""
@@ -211,7 +211,7 @@ export default function RajimoPage() {
 
             {t.solutions.items.map((item, i) => (
               <a key={item.slug} href={`/solutions/${item.slug}/`} className="col-span-12 md:col-span-4 block">
-                <BentoCard className="p-8 min-h-[200px] h-full" delay={120 + i * 40}>
+                <BentoCard className="p-6 sm:p-8 min-h-[200px] h-full" delay={120 + i * 40}>
                   <h3 className="text-lg font-light mb-2">{item.title}</h3>
                   <p className="text-sm text-black/45 leading-relaxed">{item.description}</p>
                 </BentoCard>
@@ -231,19 +231,19 @@ export default function RajimoPage() {
       </section>
 
       {/* PROCESS */}
-      <section id="workflow" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] overflow-hidden">
+      <section id="workflow" className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 border-t border-black/[0.06] overflow-hidden">
         <div className="max-w-6xl mx-auto">
-          <div className="mb-16">
+          <div className="mb-16 text-center md:text-start">
             <PixelIcon type="workflow" size={40} />
-            <div className="mt-4"><Tag>{t.process.tag}</Tag></div>
-            <RevealText locale={locale} className="mt-5 text-4xl md:text-5xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
+            <div className="mt-4 flex justify-center md:justify-start"><Tag>{t.process.tag}</Tag></div>
+            <RevealText locale={locale} className="mt-5 text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
               {t.process.title}
             </RevealText>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-3" onMouseMove={handleMouse}>
             {t.process.items.map((step, i) => (
-              <BentoCard key={step.n} className="relative overflow-hidden flex flex-col min-h-[320px]" delay={i * 80}>
+              <BentoCard key={step.n} className="relative overflow-hidden flex flex-col min-h-[280px] sm:min-h-[320px]" delay={i * 80}>
                 <div className="absolute inset-x-0 top-0 h-56 pointer-events-none">
                   <img
                     src={WORKFLOW_IMAGES[i]}
@@ -266,21 +266,21 @@ export default function RajimoPage() {
       </section>
 
       {/* INDUSTRIES */}
-      <section id="integrations" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
+      <section id="integrations" className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
         <div className="max-w-6xl mx-auto">
-          <div className={`mb-16 ${locale === "en" ? "flex flex-col md:flex-row md:items-end md:justify-between gap-8" : ""}`}>
+          <div className={`mb-16 text-center md:text-start ${locale === "en" ? "flex flex-col md:flex-row md:items-end md:justify-between gap-8" : ""}`}>
             <div>
               <PixelIcon type="integrations" size={40} />
-              <div className="mt-4"><Tag>{t.industries.tag}</Tag></div>
-              <RevealText locale={locale} className="mt-5 text-4xl md:text-5xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
+              <div className="mt-4 flex justify-center md:justify-start"><Tag>{t.industries.tag}</Tag></div>
+              <RevealText locale={locale} className="mt-5 text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
                 {t.industries.title}
               </RevealText>
               {locale === "fa" && (
-                <p className="mt-6 text-sm text-black/45 leading-relaxed max-w-2xl">{t.industries.description}</p>
+                <p className="mt-6 text-sm text-black/45 leading-relaxed max-w-2xl mx-auto md:mx-0">{t.industries.description}</p>
               )}
             </div>
             {locale === "en" && (
-              <p className="text-sm text-black/45 leading-relaxed max-w-xs">{t.industries.description}</p>
+              <p className="text-sm text-black/45 leading-relaxed max-w-xs mx-auto md:mx-0">{t.industries.description}</p>
             )}
           </div>
 
@@ -305,12 +305,12 @@ export default function RajimoPage() {
       </section>
 
       {/* WHY US */}
-      <section id="security" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
+      <section id="security" className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
         <div className="max-w-6xl mx-auto">
-          <div className="mb-16">
+          <div className="mb-16 text-center md:text-start">
             <PixelIcon type="platform" size={40} />
-            <div className="mt-4"><Tag>{t.whyUs.tag}</Tag></div>
-            <RevealText locale={locale} className="mt-5 text-4xl md:text-5xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
+            <div className="mt-4 flex justify-center md:justify-start"><Tag>{t.whyUs.tag}</Tag></div>
+            <RevealText locale={locale} className="mt-5 text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
               {t.whyUs.title}
             </RevealText>
           </div>
@@ -376,17 +376,17 @@ export default function RajimoPage() {
       </section>
 
       {/* LIVE PROJECTS */}
-      <section id="live" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
+      <section id="live" className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            <div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-14 lg:gap-20 items-center">
+            <div className="text-center md:text-start">
               <PixelIcon type="agents" size={40} />
-              <div className="mt-4"><Tag>{t.whyUs.feedTitle}</Tag></div>
-              <RevealText locale={locale} className="mt-5 text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
+              <div className="mt-4 flex justify-center md:justify-start"><Tag>{t.whyUs.feedTitle}</Tag></div>
+              <RevealText locale={locale} className="mt-5 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
                 {t.liveProjects.title}
               </RevealText>
-              <p className="mt-6 text-base text-black/40 leading-relaxed max-w-sm">{t.whyUs.description}</p>
-              <div className="mt-10 flex items-end gap-2">
+              <p className="mt-6 text-base text-black/40 leading-relaxed max-w-sm mx-auto md:mx-0">{t.whyUs.description}</p>
+              <div className="mt-10 flex justify-center md:justify-start items-end gap-2">
                 <LiveAgentCounter locale={locale} count={5} />
                 <span className="text-black/30 text-sm mb-1 tracking-wide">{t.whyUs.feedCounter}</span>
               </div>
@@ -397,19 +397,19 @@ export default function RajimoPage() {
       </section>
 
       {/* ENGAGEMENT */}
-      <section id="pricing" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
+      <section id="pricing" className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16 flex flex-col items-center">
             <PixelIcon type="pricing" size={40} />
             <div className="mt-4"><Tag>{t.engagement.tag}</Tag></div>
-            <RevealText locale={locale} className="mt-5 text-4xl md:text-5xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
+            <RevealText locale={locale} className="mt-5 text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
               {t.engagement.title}
             </RevealText>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3" onMouseMove={handleMouse}>
             {t.engagement.plans.map((plan, i) => (
-              <BentoCard key={plan.name} className={`p-8 flex flex-col ${plan.highlight ? "border-black/20 bg-[#F0EEE8]" : ""}`} delay={i * 80}>
+              <BentoCard key={plan.name} className={`p-6 sm:p-8 flex flex-col ${plan.highlight ? "border-black/20 bg-[#F0EEE8]" : ""}`} delay={i * 80}>
                 <div className="mb-8">
                   <div className={`text-[11px] text-black/40 mb-4 ${locale === "en" ? "font-pixel tracking-widest" : "font-sans"}`}>{plan.name}</div>
                   <div className="flex items-baseline gap-1 mb-1">
@@ -440,21 +440,21 @@ export default function RajimoPage() {
       </section>
 
       {/* CTA */}
-      <section id="contact" className="relative py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] overflow-hidden">
+      <section id="contact" className="relative py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 border-t border-black/[0.06] overflow-hidden">
         <img src="/images/footer.png" alt="" aria-hidden="true" className="absolute bottom-0 left-0 w-full object-cover object-bottom pointer-events-none select-none" style={{ opacity: 0.85 }} />
         <div className="absolute inset-0 pointer-events-none" style={{ maskImage: "linear-gradient(to top, transparent 0%, black 55%)", WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 55%)", backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)" }} />
         <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to top, rgb(245,244,240) 0%, rgba(245,244,240,0.92) 18%, rgba(245,244,240,0.55) 35%, transparent 55%)" }} />
 
         <div className="relative z-10 max-w-2xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] mb-6 whitespace-pre-line">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] mb-6 whitespace-pre-line">
             {t.cta.title}
           </h2>
           <p className="text-sm text-black/45 leading-relaxed mb-10">{t.cta.description}</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a href="/contact/" className="px-8 py-3 bg-[#111] text-white text-sm rounded-xl hover:bg-[#333] transition-colors tracking-widest font-medium">
+            <a href="/contact/" className="w-full sm:w-auto px-8 py-3 bg-[#111] text-white text-sm rounded-xl hover:bg-[#333] transition-colors tracking-widest font-medium text-center">
               {t.cta.button1}
             </a>
-            <a href={`mailto:${t.contact.email}`} className="px-8 py-3 border border-black/15 text-black/70 text-sm rounded-xl hover:border-black/30 hover:text-black transition-colors tracking-widest bg-white/50" dir="ltr">
+            <a href={`mailto:${t.contact.email}`} className="w-full sm:w-auto px-8 py-3 border border-black/15 text-black/70 text-sm rounded-xl hover:border-black/30 hover:text-black transition-colors tracking-widest bg-white/50 text-center" dir="ltr">
               {t.contact.email}
             </a>
           </div>
