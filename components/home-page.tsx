@@ -1,8 +1,9 @@
 "use client"
 
-import React, { useEffect, useState, useCallback, useRef } from "react"
+import React, { useEffect, useState, useCallback } from "react"
 import dynamic from "next/dynamic"
 import { IntroAnimation } from "@/components/intro-animation"
+import { HeroBackground } from "@/components/hero-background"
 import { PixelIcon } from "@/components/pixel-icon"
 import { LiveAgentFeed, LiveAgentCounter } from "@/components/live-agent-feed"
 import { RevealText } from "@/components/reveal-text"
@@ -12,7 +13,6 @@ import { SiteFooter } from "@/components/site-footer"
 import { useLocale } from "@/components/use-locale"
 import { arrowForward } from "@/lib/content"
 import { shouldSkipIntro } from "@/lib/intro-prefs"
-import { HERO_POSTER_URL, HERO_VIDEO_URL } from "@/lib/hero-media"
 
 const DevExSection = dynamic(
   () => import("@/components/devex-section").then((mod) => mod.DevExSection),
@@ -28,27 +28,19 @@ const WORKFLOW_IMAGES = [
 
 export function HomePage() {
   const { locale, toggleLocale, t } = useLocale()
-  const [introState, setIntroState] = useState<"pending" | "play" | "skip">("pending")
   const [introDone, setIntroDone] = useState(false)
   const [heroReady, setHeroReady] = useState(false)
-  const [videoReady, setVideoReady] = useState(false)
-  const videoRef = useRef<HTMLVideoElement>(null)
+  const [skipIntro, setSkipIntro] = useState(false)
 
   useEffect(() => {
-    if (shouldSkipIntro()) {
-      setIntroState("skip")
-      setIntroDone(true)
-      setHeroReady(true)
-      setVideoReady(true)
-      return
-    }
-
-    setIntroState("play")
+    if (!shouldSkipIntro()) return
+    setSkipIntro(true)
+    setIntroDone(true)
+    setHeroReady(true)
   }, [])
 
   const handleIntroReveal = useCallback(() => {
     setHeroReady(true)
-    setVideoReady(true)
   }, [])
 
   const handleIntroDone = useCallback(() => {
@@ -56,33 +48,18 @@ export function HomePage() {
   }, [])
 
   useEffect(() => {
-    if (!introDone && introState !== "skip") return
-
-    const video = videoRef.current
-    if (!video || video.dataset.loaded === "true") return
-
-    video.src = HERO_VIDEO_URL
-    video.dataset.loaded = "true"
-    video.load()
-    video.play().catch(() => {})
-  }, [introDone, introState])
-
-  useEffect(() => {
-    if (introState !== "play") return
+    if (skipIntro || introDone) return
 
     if ("scrollRestoration" in history) {
       history.scrollRestoration = "manual"
     }
     window.scrollTo(0, 0)
-
-    if (!introDone) {
-      document.documentElement.style.overflow = "hidden"
-    }
+    document.documentElement.style.overflow = "hidden"
 
     return () => {
       document.documentElement.style.overflow = ""
     }
-  }, [introDone, introState])
+  }, [introDone, skipIntro])
 
   useEffect(() => {
     if (introDone) {
@@ -104,32 +81,26 @@ export function HomePage() {
 
   return (
     <div className="bg-[#F5F4F0] text-[#111] min-h-screen font-sans antialiased" dir={t.dir}>
-      {introState === "play" && (
+      {!skipIntro && !introDone && (
         <IntroAnimation
           onReveal={handleIntroReveal}
           onDone={handleIntroDone}
         />
       )}
 
-      <div>
+      <div
+        className="transition-opacity duration-500"
+        style={{
+          opacity: introDone || skipIntro ? 1 : 0,
+          visibility: introDone || skipIntro ? "visible" : "hidden",
+          pointerEvents: introDone || skipIntro ? "auto" : "none",
+        }}
+      >
       <MobileNav content={t} locale={locale} onToggleLocale={toggleLocale} />
 
       {/* HERO */}
       <section className="relative h-[100svh] min-h-[640px] overflow-hidden">
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="none"
-          poster={HERO_POSTER_URL}
-          className="absolute inset-0 w-full h-full object-cover z-0"
-          style={{
-            transform: videoReady ? "scale(1.05)" : "scale(1)",
-            transition: videoReady ? "transform 2s cubic-bezier(0.16, 1, 0.3, 1)" : "none",
-          }}
-        />
+        <HeroBackground visible={skipIntro || heroReady} />
 
         <div className="absolute inset-x-0 bottom-0 z-10 pointer-events-none" style={{ height: "65%", background: "linear-gradient(to top, #F5F4F0 0%, #F5F4F0 18%, rgba(245,244,240,0.85) 35%, rgba(245,244,240,0.5) 55%, rgba(245,244,240,0.15) 75%, transparent 100%)" }} />
         <div className="absolute inset-x-0 bottom-0 z-10 pointer-events-none" style={{ height: "20%", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", maskImage: "linear-gradient(to top, black 0%, transparent 100%)", WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 100%)" }} />
@@ -138,13 +109,13 @@ export function HomePage() {
 
         <div className="h-12 md:h-20" />
 
-        <div className="absolute inset-x-0 bottom-0 z-30 flex flex-col px-4 sm:px-6 md:px-12 pb-8 sm:pb-10 md:pb-12 max-w-4xl text-center md:text-start items-center md:items-start">
+        <div className="absolute inset-x-0 bottom-0 z-30 flex flex-col px-4 sm:px-6 md:px-12 pb-8 sm:pb-10 md:pb-12 max-w-4xl">
           <h1
             className="text-4xl sm:text-5xl md:text-7xl font-light text-[#111] leading-[1.05] tracking-tight mb-4 sm:mb-6 whitespace-pre-line"
             style={{
-              opacity: heroReady ? 1 : 0.94,
-              filter: heroReady ? "blur(0px)" : "blur(4px)",
-              transform: heroReady ? "translateY(0px)" : "translateY(12px)",
+              opacity: heroReady ? 1 : 0,
+              filter: heroReady ? "blur(0px)" : "blur(24px)",
+              transform: heroReady ? "translateY(0px)" : "translateY(32px)",
               transition: heroReady
                 ? "opacity 1s cubic-bezier(0.16,1,0.3,1), filter 1s cubic-bezier(0.16,1,0.3,1), transform 1s cubic-bezier(0.16,1,0.3,1)"
                 : "none",
@@ -154,7 +125,7 @@ export function HomePage() {
           </h1>
 
           <p
-            className="text-sm sm:text-base md:text-lg text-black/50 leading-relaxed max-w-2xl mb-6 sm:mb-8 mx-auto md:mx-0"
+            className="text-sm sm:text-base md:text-lg text-black/50 leading-relaxed max-w-2xl mb-6 sm:mb-8"
             style={{
               opacity: heroReady ? 1 : 0,
               filter: heroReady ? "blur(0px)" : "blur(12px)",
@@ -166,22 +137,22 @@ export function HomePage() {
           </p>
 
           <div
-            className="flex flex-col sm:flex-row sm:flex-wrap gap-3 mb-8 sm:mb-10"
+            className="flex flex-wrap gap-3 mb-8 sm:mb-10"
             style={{
               opacity: heroReady ? 1 : 0,
               transform: heroReady ? "translateY(0px)" : "translateY(12px)",
               transition: "opacity 0.8s cubic-bezier(0.16,1,0.3,1) 180ms, transform 0.8s cubic-bezier(0.16,1,0.3,1) 180ms",
             }}
           >
-            <a href="/contact/" className="w-full sm:w-auto px-6 py-3 bg-[#111] text-white text-sm rounded-xl hover:bg-[#333] transition-colors tracking-wide text-center">
+            <a href="/contact/" className="px-6 py-3 bg-[#111] text-white text-sm rounded-xl hover:bg-[#333] transition-colors tracking-wide">
               {t.hero.cta1}
             </a>
-            <a href="/solutions/" className="w-full sm:w-auto px-6 py-3 border border-black/15 text-black/70 text-sm rounded-xl hover:border-black/30 hover:text-black transition-colors tracking-wide bg-white/50 text-center">
+            <a href="/solutions/" className="px-6 py-3 border border-black/15 text-black/70 text-sm rounded-xl hover:border-black/30 hover:text-black transition-colors tracking-wide bg-white/50">
               {t.hero.cta2}
             </a>
           </div>
 
-          <div className="flex flex-wrap justify-center md:justify-start gap-x-6 gap-y-4 sm:gap-10">
+          <div className="flex flex-wrap gap-x-6 gap-y-4 sm:gap-10">
             {t.hero.stats.map((stat, i) => (
               <div
                 key={stat.label}
@@ -205,13 +176,13 @@ export function HomePage() {
       {/* SOLUTIONS */}
       <section id="platform" className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20">
         <div className="max-w-6xl mx-auto">
-          <div className="mb-16 text-center md:text-start">
+          <div className="mb-16">
             <PixelIcon type="platform" size={40} />
-            <div className="mt-4 flex justify-center md:justify-start"><Tag>{t.solutions.tag}</Tag></div>
+            <div className="mt-4"><Tag>{t.solutions.tag}</Tag></div>
             <RevealText locale={locale} className="mt-5 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
               {t.solutions.title}
             </RevealText>
-            <p className="mt-6 text-sm text-black/45 leading-relaxed max-w-2xl mx-auto md:mx-0">{t.solutions.description}</p>
+            <p className="mt-6 text-sm text-black/45 leading-relaxed max-w-2xl">{t.solutions.description}</p>
           </div>
 
           <div className="grid grid-cols-12 gap-3" onMouseMove={handleMouse}>
@@ -276,9 +247,9 @@ export function HomePage() {
       {/* PROCESS */}
       <section id="workflow" className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 border-t border-black/[0.06] overflow-hidden">
         <div className="max-w-6xl mx-auto">
-          <div className="mb-16 text-center md:text-start">
+          <div className="mb-16">
             <PixelIcon type="workflow" size={40} />
-            <div className="mt-4 flex justify-center md:justify-start"><Tag>{t.process.tag}</Tag></div>
+            <div className="mt-4"><Tag>{t.process.tag}</Tag></div>
             <RevealText locale={locale} className="mt-5 text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
               {t.process.title}
             </RevealText>
@@ -313,19 +284,19 @@ export function HomePage() {
       {/* INDUSTRIES */}
       <section id="integrations" className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
         <div className="max-w-6xl mx-auto">
-          <div className={`mb-16 text-center md:text-start ${locale === "en" ? "flex flex-col md:flex-row md:items-end md:justify-between gap-8" : ""}`}>
+          <div className={`mb-16 ${locale === "en" ? "flex flex-col md:flex-row md:items-end md:justify-between gap-8" : ""}`}>
             <div>
               <PixelIcon type="integrations" size={40} />
-              <div className="mt-4 flex justify-center md:justify-start"><Tag>{t.industries.tag}</Tag></div>
+              <div className="mt-4"><Tag>{t.industries.tag}</Tag></div>
               <RevealText locale={locale} className="mt-5 text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
                 {t.industries.title}
               </RevealText>
               {locale === "fa" && (
-                <p className="mt-6 text-sm text-black/45 leading-relaxed max-w-2xl mx-auto md:mx-0">{t.industries.description}</p>
+                <p className="mt-6 text-sm text-black/45 leading-relaxed max-w-2xl">{t.industries.description}</p>
               )}
             </div>
             {locale === "en" && (
-              <p className="text-sm text-black/45 leading-relaxed max-w-xs mx-auto md:mx-0">{t.industries.description}</p>
+              <p className="text-sm text-black/45 leading-relaxed max-w-xs">{t.industries.description}</p>
             )}
           </div>
 
@@ -352,9 +323,9 @@ export function HomePage() {
       {/* WHY US */}
       <section id="security" className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
         <div className="max-w-6xl mx-auto">
-          <div className="mb-16 text-center md:text-start">
+          <div className="mb-16">
             <PixelIcon type="platform" size={40} />
-            <div className="mt-4 flex justify-center md:justify-start"><Tag>{t.whyUs.tag}</Tag></div>
+            <div className="mt-4"><Tag>{t.whyUs.tag}</Tag></div>
             <RevealText locale={locale} className="mt-5 text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
               {t.whyUs.title}
             </RevealText>
@@ -424,14 +395,14 @@ export function HomePage() {
       <section id="live" className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-14 lg:gap-20 items-center">
-            <div className="text-center md:text-start">
+            <div>
               <PixelIcon type="agents" size={40} />
-              <div className="mt-4 flex justify-center md:justify-start"><Tag>{t.whyUs.feedTitle}</Tag></div>
+              <div className="mt-4"><Tag>{t.whyUs.feedTitle}</Tag></div>
               <RevealText locale={locale} className="mt-5 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] whitespace-pre-line">
                 {t.liveProjects.title}
               </RevealText>
-              <p className="mt-6 text-base text-black/40 leading-relaxed max-w-sm mx-auto md:mx-0">{t.whyUs.description}</p>
-              <div className="mt-10 flex justify-center md:justify-start items-end gap-2">
+              <p className="mt-6 text-base text-black/40 leading-relaxed max-w-sm">{t.whyUs.description}</p>
+              <div className="mt-10 flex items-end gap-2">
                 <LiveAgentCounter locale={locale} count={5} />
                 <span className="text-black/30 text-sm mb-1 tracking-wide">{t.whyUs.feedCounter}</span>
               </div>

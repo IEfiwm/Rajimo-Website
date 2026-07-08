@@ -47,13 +47,13 @@ type IntroAnimationProps = {
 export function IntroAnimation({ onDone, onReveal, skip = false }: IntroAnimationProps) {
   const [phase, setPhase] = useState<Phase>(skip ? "done" : "idle")
   const [curtainUp, setCurtainUp] = useState(false)
-  const [compact, setCompact] = useState(false)
+  const [compact] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia("(max-width: 768px)").matches
+      : false
+  )
 
   const timing = useMemo(() => getIntroTiming(compact), [compact])
-
-  useEffect(() => {
-    setCompact(window.matchMedia("(max-width: 768px)").matches)
-  }, [])
 
   useEffect(() => {
     if (skip) {

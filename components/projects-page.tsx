@@ -30,23 +30,21 @@ export function ProjectsPage() {
         <div className="max-w-6xl mx-auto">
           <a
             href="/"
-            className="inline-flex items-center gap-2 text-xs text-black/40 hover:text-black/70 transition-colors mb-10 justify-center md:justify-start"
+            className="inline-flex items-center gap-2 text-xs text-black/40 hover:text-black/70 transition-colors mb-10"
           >
             <span aria-hidden="true">{arrowBack(locale)}</span>
             {page.backHome}
           </a>
 
-          <div className="mb-16 text-center md:text-start">
-            <div className="flex justify-center md:justify-start">
-              <Tag>{page.tag}</Tag>
-            </div>
+          <div className="mb-16">
+            <Tag>{page.tag}</Tag>
             <RevealText
               locale={locale}
               className="mt-5 text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05]"
             >
               {page.title}
             </RevealText>
-            <p className="mt-6 text-sm text-black/45 leading-relaxed max-w-2xl mx-auto md:mx-0">{page.description}</p>
+            <p className="mt-6 text-sm text-black/45 leading-relaxed max-w-2xl">{page.description}</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8" onMouseMove={handleMouse}>
