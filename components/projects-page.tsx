@@ -30,21 +30,23 @@ export function ProjectsPage() {
         <div className="max-w-6xl mx-auto">
           <a
             href="/"
-            className="inline-flex items-center gap-2 text-xs text-black/40 hover:text-black/70 transition-colors mb-10"
+            className="inline-flex items-center gap-2 text-xs text-black/40 hover:text-black/70 transition-colors mb-10 justify-center md:justify-start"
           >
             <span aria-hidden="true">{arrowBack(locale)}</span>
             {page.backHome}
           </a>
 
-          <div className="mb-16">
-            <Tag>{page.tag}</Tag>
+          <div className="mb-16 text-center md:text-start">
+            <div className="flex justify-center md:justify-start">
+              <Tag>{page.tag}</Tag>
+            </div>
             <RevealText
               locale={locale}
               className="mt-5 text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05]"
             >
               {page.title}
             </RevealText>
-            <p className="mt-6 text-sm text-black/45 leading-relaxed max-w-2xl">{page.description}</p>
+            <p className="mt-6 text-sm text-black/45 leading-relaxed max-w-2xl mx-auto md:mx-0">{page.description}</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8" onMouseMove={handleMouse}>
@@ -55,7 +57,7 @@ export function ProjectsPage() {
                   visitLabel={page.visitSite}
                   openLabel={page.openInNewTab}
                 />
-                <div className="mt-5 flex items-start justify-between gap-4">
+                <div className="mt-5 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 text-center sm:text-start">
                   <div>
                     <h2 className="text-lg font-light">{project.name}</h2>
                     <p className="text-sm text-black/45 mt-1 leading-relaxed">{project.description}</p>

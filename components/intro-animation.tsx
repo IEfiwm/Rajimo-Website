@@ -1,85 +1,123 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
+import { markIntroSeen } from "@/lib/intro-prefs"
 
 const LETTERS = ["R", "A", "J", "I", "M", "O"]
 
-const LETTER_IN_STAGGER  = 90    // ms between each letter appearing
-const LETTER_IN_DUR      = 700   // duration of each letter appear transition
-const HOLD_DURATION      = 300   // hold fully visible before exit
-const LETTERS_IN_TOTAL   = LETTER_IN_STAGGER * (LETTERS.length - 1) + LETTER_IN_DUR + HOLD_DURATION
+function getIntroTiming(compact: boolean) {
+  const letterInStagger = compact ? 55 : 90
+  const letterInDur = compact ? 450 : 700
+  const holdDuration = compact ? 120 : 300
+  const lettersInTotal =
+    letterInStagger * (LETTERS.length - 1) + letterInDur + holdDuration
 
-const LETTER_OUT_STAGGER = 55    // ms between each letter disappearing
-const LETTER_OUT_DUR     = 450   // duration of each letter fade out
-const LETTERS_OUT_TOTAL  = LETTER_OUT_STAGGER * (LETTERS.length - 1) + LETTER_OUT_DUR
+  const letterOutStagger = compact ? 35 : 55
+  const letterOutDur = compact ? 300 : 450
+  const lettersOutTotal = letterOutStagger * (LETTERS.length - 1) + letterOutDur
 
-const CURTAIN_DELAY      = LETTERS_IN_TOTAL + 100
-const CURTAIN_DURATION   = 1300  // matches the CSS transition on the curtain div
-const ANIM_TOTAL         = CURTAIN_DELAY + LETTERS_OUT_TOTAL + 1400
+  const curtainDelay = lettersInTotal + (compact ? 60 : 100)
+  const curtainDuration = compact ? 850 : 1300
+  const animTotal = curtainDelay + lettersOutTotal + (compact ? 500 : 1400)
 
-// Exported: moment the curtain finishes retracting — when the bg is fully visible
-export const INTRO_DURATION_MS = CURTAIN_DELAY + CURTAIN_DURATION
-// Exported: ms before curtain fully done to start hero animations (overlap for smoothness)
-export const HERO_REVEAL_MS = CURTAIN_DELAY + CURTAIN_DURATION - 150
+  return {
+    letterInStagger,
+    letterInDur,
+    lettersInTotal,
+    letterOutStagger,
+    letterOutDur,
+    curtainDelay,
+    curtainDuration,
+    animTotal,
+    heroRevealMs: curtainDelay + curtainDuration - 150,
+  }
+}
+
+export const INTRO_DURATION_MS = getIntroTiming(false).curtainDelay + getIntroTiming(false).curtainDuration
+export const HERO_REVEAL_MS = getIntroTiming(false).heroRevealMs
 
 type Phase = "idle" | "in" | "out" | "done"
 
-export function IntroAnimation({ onDone }: { onDone: () => void }) {
-  const [phase, setPhase] = useState<Phase>("idle")
+type IntroAnimationProps = {
+  onDone: () => void
+  onReveal?: () => void
+  skip?: boolean
+}
+
+export function IntroAnimation({ onDone, onReveal, skip = false }: IntroAnimationProps) {
+  const [phase, setPhase] = useState<Phase>(skip ? "done" : "idle")
   const [curtainUp, setCurtainUp] = useState(false)
+  const [compact, setCompact] = useState(false)
+
+  const timing = useMemo(() => getIntroTiming(compact), [compact])
 
   useEffect(() => {
-    const t0 = setTimeout(() => setPhase("in"), 80)
-    const t1 = setTimeout(() => setPhase("out"), LETTERS_IN_TOTAL)
-    const t2 = setTimeout(() => setCurtainUp(true), CURTAIN_DELAY)
+    setCompact(window.matchMedia("(max-width: 768px)").matches)
+  }, [])
+
+  useEffect(() => {
+    if (skip) {
+      onDone()
+      return
+    }
+
+    const t0 = setTimeout(() => setPhase("in"), 50)
+    const t1 = setTimeout(() => setPhase("out"), timing.lettersInTotal)
+    const t2 = setTimeout(() => setCurtainUp(true), timing.curtainDelay)
+    const tReveal = setTimeout(() => onReveal?.(), timing.heroRevealMs)
     const t4 = setTimeout(() => {
       setPhase("done")
+      markIntroSeen()
       onDone()
-    }, ANIM_TOTAL)
+    }, timing.animTotal)
 
-    return () => { clearTimeout(t0); clearTimeout(t1); clearTimeout(t2); clearTimeout(t4) }
-  }, [onDone])
+    return () => {
+      clearTimeout(t0)
+      clearTimeout(t1)
+      clearTimeout(t2)
+      clearTimeout(tReveal)
+      clearTimeout(t4)
+    }
+  }, [onDone, onReveal, skip, timing])
 
   if (phase === "done") return null
 
   return (
     <div className="fixed inset-0 z-[100] pointer-events-none bg-[#f5f4f1]" aria-hidden="true">
-
-      {/* Gradient curtain — retracts upward, revealing mountains from bottom */}
       <div
         className="absolute inset-x-0 top-0"
         style={{
           bottom: curtainUp ? "100%" : "0%",
-          transition: curtainUp ? "bottom 1.3s cubic-bezier(0.76, 0, 0.24, 1)" : "none",
+          transition: curtainUp
+            ? `bottom ${timing.curtainDuration}ms cubic-bezier(0.76, 0, 0.24, 1)`
+            : "none",
           background: "#f5f4f1",
         }}
       />
 
-      {/* RAJIMO letters — always LTR so RTL page dir doesn't reverse order */}
       <div className="absolute inset-0 flex items-center justify-center" dir="ltr">
         <div className="flex" style={{ gap: "0.06em", direction: "ltr" }}>
           {LETTERS.map((letter, i) => {
-            const inDelay  = i * LETTER_IN_STAGGER
-            const outDelay = i * LETTER_OUT_STAGGER
+            const inDelay = i * timing.letterInStagger
+            const outDelay = i * timing.letterOutStagger
 
-            // idle → invisible starting position
             const isIdle = phase === "idle"
-            const isIn   = phase === "in"
-            const isOut  = phase === "out"
+            const isIn = phase === "in"
+            const isOut = phase === "out"
 
-            const opacity    = isIdle ? 0 : isIn ? 1 : 0
-            const blur       = isIdle ? 36 : isIn ? 0 : 24
+            const opacity = isIdle ? 0 : isIn ? 1 : 0
+            const blur = isIdle ? 36 : isIn ? 0 : 24
             const translateY = isIdle ? 48 : isIn ? 0 : -20
 
             const transition = isOut
-              ? `opacity ${LETTER_OUT_DUR}ms cubic-bezier(0.4,0,1,1) ${outDelay}ms,
-                 filter  ${LETTER_OUT_DUR}ms cubic-bezier(0.4,0,1,1) ${outDelay}ms,
-                 transform ${LETTER_OUT_DUR}ms cubic-bezier(0.4,0,1,1) ${outDelay}ms`
+              ? `opacity ${timing.letterOutDur}ms cubic-bezier(0.4,0,1,1) ${outDelay}ms,
+                 filter ${timing.letterOutDur}ms cubic-bezier(0.4,0,1,1) ${outDelay}ms,
+                 transform ${timing.letterOutDur}ms cubic-bezier(0.4,0,1,1) ${outDelay}ms`
               : isIn
-              ? `opacity ${LETTER_IN_DUR}ms cubic-bezier(0.16,1,0.3,1) ${inDelay}ms,
-                 filter  ${LETTER_IN_DUR}ms cubic-bezier(0.16,1,0.3,1) ${inDelay}ms,
-                 transform ${LETTER_IN_DUR}ms cubic-bezier(0.16,1,0.3,1) ${inDelay}ms`
-              : "none"
+                ? `opacity ${timing.letterInDur}ms cubic-bezier(0.16,1,0.3,1) ${inDelay}ms,
+                   filter ${timing.letterInDur}ms cubic-bezier(0.16,1,0.3,1) ${inDelay}ms,
+                   transform ${timing.letterInDur}ms cubic-bezier(0.16,1,0.3,1) ${inDelay}ms`
+                : "none"
 
             return (
               <span
@@ -101,7 +139,6 @@ export function IntroAnimation({ onDone }: { onDone: () => void }) {
           })}
         </div>
       </div>
-
     </div>
   )
 }

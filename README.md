@@ -15,6 +15,7 @@
 - [پیش‌نیازها](#پیشنیازها)
 - [اجرای محلی](#اجرای-محلی)
 - [Build و خروجی](#build-و-خروجی)
+- [SEO](#seo)
 - [مدیریت نسخه](#مدیریت-نسخه)
 - [CHANGELOG](#changelog)
 - [CI/CD با GitHub Actions](#cicd-با-github-actions)
@@ -53,6 +54,46 @@ npm run build
 
 - پیکربندی پروژه برای خروجی استاتیک در `next.config.mjs` انجام شده است.
 - خروجی build مناسب دیپلوی روی هاست‌های ساده (FTP/Apache) است.
+
+---
+
+## SEO
+
+پروژه برای سئو فنی آماده شده است:
+
+- متادیتای اختصاصی هر صفحه (`title`, `description`, `canonical`, Open Graph, Twitter)
+- `robots.txt` و `sitemap.xml` خودکار
+- `manifest.webmanifest` برای PWA پایه
+- JSON-LD: `Organization`, `WebSite`, `WebPage`, `Service`, `BreadcrumbList`
+
+### تنظیم دامنه
+
+آدرس سایت از متغیر `NEXT_PUBLIC_SITE_URL` خوانده می‌شود (پیش‌فرض: `https://rajimo.ir`).
+
+محلی:
+
+```bash
+# .env.local
+NEXT_PUBLIC_SITE_URL=https://rajimo.ir
+```
+
+در GitHub Actions (Variables):
+
+| Variable | مقدار |
+| --- | --- |
+| `SITE_URL` | `https://rajimo.ir` |
+
+### فایل‌های مرتبط
+
+- `lib/seo.ts` — تنظیمات مرکزی SEO
+- `lib/seo-schemas.ts` — اسکیماهای JSON-LD
+- `app/robots.ts`, `app/sitemap.ts`, `app/manifest.ts`
+
+### پیشنهاد بعد از دیپلوی
+
+1. سایت را در [Google Search Console](https://search.google.com/search-console) ثبت کنید
+2. `sitemap.xml` را ارسال کنید: `https://rajimo.ir/sitemap.xml`
+3. یک تصویر OG اختصاصی ۱۲۰۰×۶۳۰ در `public/og-image.jpg` قرار دهید (اختیاری ولی توصیه‌شده)
 
 ---
 

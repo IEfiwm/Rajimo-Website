@@ -85,26 +85,28 @@ export function ContactPage() {
         <div className="max-w-6xl mx-auto">
           <a
             href="/"
-            className="inline-flex items-center gap-2 text-xs text-black/40 hover:text-black/70 transition-colors mb-10"
+            className="inline-flex items-center gap-2 text-xs text-black/40 hover:text-black/70 transition-colors mb-10 justify-center md:justify-start"
           >
             <span aria-hidden="true">{arrowBack(locale)}</span>
             {c.backHome}
           </a>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-            <div>
-              <Tag>{c.tag}</Tag>
+            <div className="text-center md:text-start">
+              <div className="flex justify-center md:justify-start">
+                <Tag>{c.tag}</Tag>
+              </div>
               <RevealText
                 locale={locale}
                 className="mt-5 text-4xl md:text-5xl font-light tracking-tight leading-[1.05]"
               >
                 {c.title}
               </RevealText>
-              <p className="mt-6 text-sm md:text-base text-black/45 leading-relaxed max-w-md">
+              <p className="mt-6 text-sm md:text-base text-black/45 leading-relaxed max-w-md mx-auto md:mx-0">
                 {c.description}
               </p>
 
-              <div className="mt-10 space-y-5 text-start">
+              <div className="mt-10 space-y-5 text-center md:text-start">
                 <div>
                   <p className="text-xs text-black/35 mb-2 tracking-wide">
                     {c.emailLabel}
@@ -121,7 +123,7 @@ export function ContactPage() {
                   <p className="text-xs text-black/35 mb-2 tracking-wide">
                     {c.phoneLabel}
                   </p>
-                  <div className="flex flex-col gap-2 items-start">
+                  <div className="flex flex-col gap-2 items-center md:items-start">
                     {c.phones.map((num) => (
                       <a
                         key={num}

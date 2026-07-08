@@ -1,6 +1,5 @@
 name: Build & Deploy (FTP)
 
-# اجرا هنگام push روی شاخه اصلی + امکان اجرای دستی از تب Actions
 on:
   push:
     branches:
@@ -8,7 +7,6 @@ on:
       - master
   workflow_dispatch:
 
-# جلوگیری از اجرای هم‌زمان چند deploy روی یک شاخه
 concurrency:
   group: deploy-${{ github.ref }}
   cancel-in-progress: true
@@ -34,6 +32,7 @@ jobs:
         run: npm run build
         env:
           NEXT_TELEMETRY_DISABLED: "1"
+          NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || 'https://rajimo.ir' }}
 
       - name: Deploy to host over FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -41,13 +40,9 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # مسیر مقصد روی هاست (مثلاً public_html/). پیش‌فرض ریشه است.
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
-          # خروجی build نکست‌جی‌اس؛ اسلش انتهایی مهم است تا محتوای پوشه آپلود شود.
           local-dir: ./out/
-          # پروتکل: ftp (ساده) یا ftps (امن). در صورت پشتیبانی هاست ftps توصیه می‌شود.
           protocol: ${{ vars.FTP_PROTOCOL || 'ftp' }}
-          # فایل‌هایی که نباید آپلود/حذف شوند
           exclude: |
             **/.git*
             **/.git*/**

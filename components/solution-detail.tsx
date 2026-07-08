@@ -37,26 +37,28 @@ export function SolutionDetail({ slug }: SolutionDetailProps) {
         <div className="max-w-6xl mx-auto">
           <a
             href="/solutions/"
-            className="inline-flex items-center gap-2 text-xs text-black/40 hover:text-black/70 transition-colors mb-10"
+            className="inline-flex items-center gap-2 text-xs text-black/40 hover:text-black/70 transition-colors mb-10 justify-center md:justify-start"
           >
             <span aria-hidden="true">{arrowBack(locale)}</span>
             {index.backToSolutions}
           </a>
 
-          <div className="mb-16">
-            <Tag>{solution.tag}</Tag>
+          <div className="mb-16 text-center md:text-start">
+            <div className="flex justify-center md:justify-start">
+              <Tag>{solution.tag}</Tag>
+            </div>
             <RevealText
               locale={locale}
               className="mt-5 text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] whitespace-pre-line"
             >
               {solution.heroTitle}
             </RevealText>
-            <p className="mt-6 text-sm md:text-base text-black/45 leading-relaxed max-w-2xl">
+            <p className="mt-6 text-sm md:text-base text-black/45 leading-relaxed max-w-2xl mx-auto md:mx-0">
               {solution.heroDescription}
             </p>
           </div>
 
-          <div className="mb-20 space-y-5 max-w-3xl">
+          <div className="mb-20 space-y-5 max-w-3xl mx-auto md:mx-0 text-center md:text-start">
             {solution.overview.map((paragraph) => (
               <p key={paragraph} className="text-sm md:text-base text-black/45 leading-relaxed">
                 {paragraph}
@@ -64,13 +66,13 @@ export function SolutionDetail({ slug }: SolutionDetailProps) {
             ))}
           </div>
 
-          <div className="mb-12">
+          <div className="mb-12 text-center md:text-start">
             <h2 className="text-2xl md:text-3xl font-light mb-8">
               {locale === "fa" ? "چه ارائه می‌دهیم" : "What we deliver"}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3" onMouseMove={handleMouse}>
               {solution.features.map((feature, i) => (
-                <BentoCard key={feature.title} className="p-8 min-h-[180px]" delay={i * 60}>
+                <BentoCard key={feature.title} className="p-8 min-h-[180px] text-center md:text-start" delay={i * 60}>
                   <h3 className="text-lg font-light mb-3">{feature.title}</h3>
                   <p className="text-sm text-black/45 leading-relaxed">{feature.description}</p>
                 </BentoCard>
@@ -78,7 +80,7 @@ export function SolutionDetail({ slug }: SolutionDetailProps) {
             </div>
           </div>
 
-          <BentoCard className="p-8 md:p-10 mb-20" delay={200}>
+          <BentoCard className="p-8 md:p-10 mb-20 text-center md:text-start" delay={200}>
             <h2 className="text-xl font-light mb-6">
               {locale === "fa" ? "کاربردها" : "Use cases"}
             </h2>

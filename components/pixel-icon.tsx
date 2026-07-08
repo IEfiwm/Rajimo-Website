@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react"
 
 // Each icon is a 12×12 pixel grid animated at 60fps with RAF
-// Colors are black at varying opacity to match the light theme
 
 type IconType = "platform" | "agents" | "workflow" | "integrations" | "pricing"
 
@@ -233,37 +232,76 @@ function drawPricing(ctx: CanvasRenderingContext2D, W: number, t: number) {
 // ── Canvas wrapper ────────────────────────────────────────────────────────────
 export function PixelIcon({ type, size = 40 }: PixelIconProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const rafRef    = useRef<number>(0)
+  const rafRef = useRef<number>(0)
+  const visibleRef = useRef(true)
+  const sizeRef = useRef(size)
+
+  useEffect(() => {
+    sizeRef.current = size
+  }, [size])
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
-    const ctx = canvas.getContext("2d")!
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visibleRef.current = entry.isIntersecting
+      },
+      { rootMargin: "120px" }
+    )
+    observer.observe(canvas)
+
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
+
+    const resizeCanvas = () => {
+      const dpr = window.devicePixelRatio || 1
+      const renderSize = sizeRef.current
+      canvas.width = renderSize * dpr
+      canvas.height = renderSize * dpr
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    }
+
+    resizeCanvas()
+    window.addEventListener("resize", resizeCanvas)
 
     const draw = (t: number) => {
-      const dpr = window.devicePixelRatio || 1
-      canvas.width  = size * dpr
-      canvas.height = size * dpr
-      ctx.scale(dpr, dpr)
-      ctx.clearRect(0, 0, size, size)
+      if (visibleRef.current) {
+        const renderSize = sizeRef.current
+        ctx.clearRect(0, 0, renderSize, renderSize)
+        ctx.imageSmoothingEnabled = false
 
-      // Disable anti-aliasing for crisp pixels
-      ctx.imageSmoothingEnabled = false
-
-      switch (type) {
-        case "platform":      drawPlatform(ctx, size, t);      break
-        case "agents":        drawAgents(ctx, size, t);        break
-        case "workflow":      drawWorkflow(ctx, size, t);      break
-        case "integrations":  drawIntegrations(ctx, size, t);  break
-        case "pricing":       drawPricing(ctx, size, t);       break
+        switch (type) {
+          case "platform":
+            drawPlatform(ctx, renderSize, t)
+            break
+          case "agents":
+            drawAgents(ctx, renderSize, t)
+            break
+          case "workflow":
+            drawWorkflow(ctx, renderSize, t)
+            break
+          case "integrations":
+            drawIntegrations(ctx, renderSize, t)
+            break
+          case "pricing":
+            drawPricing(ctx, renderSize, t)
+            break
+        }
       }
 
       rafRef.current = requestAnimationFrame(draw)
     }
 
     rafRef.current = requestAnimationFrame(draw)
-    return () => cancelAnimationFrame(rafRef.current)
-  }, [type, size])
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener("resize", resizeCanvas)
+      cancelAnimationFrame(rafRef.current)
+    }
+  }, [type])
 
   return (
     <canvas

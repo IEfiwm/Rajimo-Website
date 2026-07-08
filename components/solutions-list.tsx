@@ -30,27 +30,29 @@ export function SolutionsList() {
         <div className="max-w-6xl mx-auto">
           <a
             href="/"
-            className="inline-flex items-center gap-2 text-xs text-black/40 hover:text-black/70 transition-colors mb-10"
+            className="inline-flex items-center gap-2 text-xs text-black/40 hover:text-black/70 transition-colors mb-10 justify-center md:justify-start"
           >
             <span aria-hidden="true">{arrowBack(locale)}</span>
             {index.backHome}
           </a>
 
-          <div className="mb-16">
-            <Tag>{index.tag}</Tag>
+          <div className="mb-16 text-center md:text-start">
+            <div className="flex justify-center md:justify-start">
+              <Tag>{index.tag}</Tag>
+            </div>
             <RevealText
               locale={locale}
               className="mt-5 text-4xl md:text-5xl lg:text-6xl font-light tracking-tight leading-[1.05] whitespace-pre-line"
             >
               {index.title}
             </RevealText>
-            <p className="mt-6 text-sm text-black/45 leading-relaxed max-w-2xl">{index.description}</p>
+            <p className="mt-6 text-sm text-black/45 leading-relaxed max-w-2xl mx-auto md:mx-0">{index.description}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3" onMouseMove={handleMouse}>
             {solutions.map((solution, i) => (
               <a key={solution.slug} href={`/solutions/${solution.slug}/`} className="block">
-                <BentoCard className="p-8 min-h-[220px] h-full flex flex-col" delay={i * 80}>
+                <BentoCard className="p-8 min-h-[220px] h-full flex flex-col text-center md:text-start" delay={i * 80}>
                   <span className="text-[11px] text-black/30 mb-4">{solution.tag}</span>
                   <h2 className="text-xl font-light mb-3">{solution.title}</h2>
                   <p className="text-sm text-black/45 leading-relaxed flex-1">{solution.shortDescription}</p>
