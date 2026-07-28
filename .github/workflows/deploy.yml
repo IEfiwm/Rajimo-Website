@@ -58,16 +58,56 @@ jobs:
           test -f out/web.config && echo "web.config ok" || echo "WARNING: web.config missing"
           ls -la out/error_docs | head -40
 
-      - name: Deploy to host over FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
-          local-dir: ./out/
-          protocol: ${{ vars.FTP_PROTOCOL || 'ftp' }}
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
+      - name: Deploy to host over FTP (parallel)
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
+          FTP_PROTOCOL: ${{ vars.FTP_PROTOCOL || 'ftp' }}
+          FTP_PARALLEL: ${{ vars.FTP_PARALLEL || '16' }}
+        run: |
+          set -euo pipefail
+
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp
+
+          REMOTE_DIR="${FTP_SERVER_DIR:-/}"
+          case "$REMOTE_DIR" in
+            */) ;;
+            *) REMOTE_DIR="${REMOTE_DIR}/" ;;
+          esac
+
+          PARALLEL="${FTP_PARALLEL:-8}"
+
+          if [ "$FTP_PROTOCOL" = "ftps" ]; then
+            SSL_OPTS='set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate no;'
+          else
+            SSL_OPTS='set ftp:ssl-allow no;'
+          fi
+
+          echo "Deploying ./out → ${FTP_SERVER}:${REMOTE_DIR} (parallel=${PARALLEL}, protocol=${FTP_PROTOCOL})"
+
+          # shellcheck disable=SC2086
+          lftp -c "
+            ${SSL_OPTS}
+            set net:max-retries 5;
+            set net:timeout 30;
+            set net:connection-limit ${PARALLEL};
+            set mirror:parallel-transfer-count ${PARALLEL};
+            set mirror:parallel-directories true;
+            set cmd:fail-exit true;
+            open -u \"${FTP_USERNAME}\",\"${FTP_PASSWORD}\" ${FTP_SERVER};
+            lcd ./out;
+            cd ${REMOTE_DIR};
+            mirror --reverse \
+              --parallel=${PARALLEL} \
+              --delete \
+              --verbose \
+              --no-perms \
+              --exclude-glob .git* \
+              --exclude-glob .ftp-deploy-sync-state.json;
+            bye
+          "
+
+          echo "FTP deploy finished."

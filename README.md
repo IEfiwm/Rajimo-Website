@@ -217,10 +217,14 @@ error_page 504 /error-pages/origin-502.html;
 | `FTP_PASSWORD` | رمز FTP |
 | `FTP_SERVER_DIR` | مسیر مقصد روی هاست (مثل `/public_html/`) |
 
-اختیاری:
+اختیاری (Variables):
 
-- Variable به نام `FTP_PROTOCOL` با مقدار `ftps` (در صورت نیاز)
+| Variable | پیش‌فرض | توضیح |
+| --- | --- | --- |
+| `FTP_PROTOCOL` | `ftp` | مقدار `ftps` برای اتصال امن |
+| `FTP_PARALLEL` | `8` | تعداد آپلود هم‌زمان با lftp |
 
+دیپلوی با `lftp mirror --parallel` انجام می‌شود تا فایل‌ها هم‌زمان آپلود شوند و زمان CI کوتاه‌تر شود.
 ---
 
 ## ساختار پروژه
