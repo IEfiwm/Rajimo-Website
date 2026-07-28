@@ -149,12 +149,31 @@ npm run version:major   # 0.3.0 → 1.0.0
 2. نصب Node.js 20
 3. `npm install`
 4. `npm run build`
-5. آپلود خروجی روی هاست با FTP
+5. آماده‌سازی 404 برای Plesk (`error_docs/not_found.html` + `.htaccess`)
+6. آپلود خروجی روی هاست با FTP
 
 اجرای ورک‌فلو:
 
 - با push روی `main` یا `master`
 - اجرای دستی از تب Actions
+
+### صفحه 404 روی Plesk
+
+سایت استاتیک است؛ خودِ Next.js روی هاست اجرا نمی‌شود. برای اینکه به‌جای صفحه پیش‌فرض Plesk، 404 خودمان نشان داده شود:
+
+1. فایل `public/.htaccess` با `ErrorDocument 404 /404.html` هنگام build داخل `out/` کپی می‌شود
+2. ورک‌فلو یک کپی از `404.html` را در `error_docs/not_found.html` هم می‌گذارد (مسیر پیش‌فرض Plesk)
+
+اگر بعد از دیپلوی هنوز 404 پیش‌فرض آمد، در پنل Plesk:
+
+**Domains → دامنه → Apache & nginx Settings**
+
+- گزینه **Custom error documents** را روشن کنید، یا
+- در بخش **Additional nginx directives** این خط را بگذارید:
+
+```nginx
+error_page 404 /404.html;
+```
 
 ---
 
@@ -204,3 +223,4 @@ npm run version:major   # 0.3.0 → 1.0.0
 - اگر UI تغییر نکرد: `Cmd + Shift + R` (hard refresh)
 - اگر build خطا داد: اول محلی `npm run build` را اجرا کنید
 - اگر deploy خطا داد: Secrets و مسیر `FTP_SERVER_DIR` را بررسی کنید
+- اگر روی هاست صفحه 404 پیش‌فرض Plesk می‌آید: بخش [صفحه 404 روی Plesk](#صفحه-404-روی-plesk) را ببینید و وجود فایل‌های `/404.html` و `/error_docs/not_found.html` را چک کنید
