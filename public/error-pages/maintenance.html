@@ -123,6 +123,7 @@ p.desc{
 }
 .btn.primary{ background:var(--accent); border-color:var(--accent); color:#08101f; }
 .btn:hover{ transform:translateY(-1px); filter:brightness(1.08); }
+a.btn{ text-decoration:none; display:inline-block; }
 .module{ position:relative; z-index:1; margin-top:8px; }
 .captcha-box{
   display:flex; align-items:center; gap:14px;
@@ -195,7 +196,8 @@ footer{
     <div class="module"></div>
 
     <div class="actions">
-      <button class="btn ">وضعیت سرویس</button>
+      <a class="btn" href="/">وضعیت سرویس</a>
+      <button class="btn primary" type="button" onclick="location.reload()">تلاش مجدد</button>
     </div>
 
     <div class="divider"></div>

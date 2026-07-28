@@ -123,6 +123,7 @@ p.desc{
 }
 .btn.primary{ background:var(--accent); border-color:var(--accent); color:#08101f; }
 .btn:hover{ transform:translateY(-1px); filter:brightness(1.08); }
+a.btn{ text-decoration:none; display:inline-block; }
 .module{ position:relative; z-index:1; margin-top:8px; }
 .captcha-box{
   display:flex; align-items:center; gap:14px;
@@ -200,7 +201,8 @@ footer{
       </div></div>
 
     <div class="actions">
-      
+      <button class="btn primary" type="button" onclick="location.reload()">تلاش مجدد</button>
+      <a class="btn" href="/">صفحه اصلی</a>
     </div>
 
     <div class="divider"></div>
@@ -219,6 +221,17 @@ function pad(n){ return n.toString().padStart(2,'0'); }
 const now = new Date();
 document.getElementById('timeStamp').textContent =
   `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+
+let left = 12;
+const rl = document.getElementById('rlSeconds');
+const tick = setInterval(() => {
+  left -= 1;
+  if (rl) rl.textContent = `${Math.max(left, 0)}s`;
+  if (left <= 0) {
+    clearInterval(tick);
+    location.reload();
+  }
+}, 1000);
 </script>
 </body>
 </html>

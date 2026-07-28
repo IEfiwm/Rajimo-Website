@@ -33,12 +33,29 @@ jobs:
           NEXT_TELEMETRY_DISABLED: "1"
           NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || 'https://rajimo.ir' }}
 
-      # Plesk default error docs live in /error_docs/ — mirror our 404 there too
+      # Map custom pages into Plesk error_docs/ names + keep /error-pages/ URLs
       - name: Prepare Plesk error documents
         run: |
+          set -e
           mkdir -p out/error_docs
+
+          # Next.js generated 404
           cp out/404.html out/error_docs/not_found.html
-          test -f out/.htaccess && echo "htaccess present" || echo "WARNING: .htaccess missing"
+
+          # Map branded pages → Plesk default filenames
+          cp out/error-pages/firewall.html            out/error_docs/forbidden.html
+          cp out/error-pages/link-invalid.html         out/error_docs/unauthorized.html
+          cp out/error-pages/origin-502.html           out/error_docs/bad_gateway.html
+          cp out/error-pages/origin-502.html           out/error_docs/internal_server_error.html
+          cp out/error-pages/origin-502.html           out/error_docs/gateway_timeout.html
+          cp out/error-pages/maintenance.html          out/error_docs/service_unavailable.html
+          cp out/error-pages/link-expired.html         out/error_docs/gone.html
+
+          # Also keep copies under Plesk error_docs by semantic name (for panel overrides)
+          cp out/error-pages/*.html out/error_docs/
+
+          test -f out/.htaccess && echo "htaccess ok" || echo "WARNING: .htaccess missing"
+          ls -la out/error_docs | head -40
 
       - name: Deploy to host over FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5

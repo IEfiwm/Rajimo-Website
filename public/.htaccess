@@ -1,19 +1,21 @@
-# Plesk / Apache — serve the Next.js static 404 page
-# (generated as /404.html during `next build` with output: "export")
+# Plesk / Apache — custom error documents
+# Pages live in /error-pages/ and are mirrored to /error_docs/ on deploy.
 
 Options -Indexes
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
-
-  # Force HTTPS (optional; remove if SSL is handled elsewhere)
-  # RewriteCond %{HTTPS} !=on
-  # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
 
-# Custom error pages (overrides Plesk default)
+# ── HTTP error pages ──────────────────────────────────────────────
+ErrorDocument 403 /error-pages/firewall.html
 ErrorDocument 404 /404.html
-ErrorDocument 403 /404.html
+ErrorDocument 410 /error-pages/link-expired.html
+ErrorDocument 429 /error-pages/rate-limit.html
+ErrorDocument 500 /error-pages/origin-502.html
+ErrorDocument 502 /error-pages/origin-502.html
+ErrorDocument 503 /error-pages/maintenance.html
+ErrorDocument 504 /error-pages/origin-502.html
 
 # Caching for static assets
 <IfModule mod_expires.c>

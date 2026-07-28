@@ -157,22 +157,47 @@ npm run version:major   # 0.3.0 → 1.0.0
 - با push روی `main` یا `master`
 - اجرای دستی از تب Actions
 
-### صفحه 404 روی Plesk
+### صفحه 404 و خطاها روی Plesk
 
-سایت استاتیک است؛ خودِ Next.js روی هاست اجرا نمی‌شود. برای اینکه به‌جای صفحه پیش‌فرض Plesk، 404 خودمان نشان داده شود:
+سایت استاتیک است؛ خودِ Next.js روی هاست اجرا نمی‌شود.
 
-1. فایل `public/.htaccess` با `ErrorDocument 404 /404.html` هنگام build داخل `out/` کپی می‌شود
-2. ورک‌فلو یک کپی از `404.html` را در `error_docs/not_found.html` هم می‌گذارد (مسیر پیش‌فرض Plesk)
+| کد | صفحه | مسیر Plesk `error_docs/` |
+| --- | --- | --- |
+| 403 | `/error-pages/firewall.html` | `forbidden.html` |
+| 404 | `/404.html` (صفحه Next) | `not_found.html` |
+| 410 | `/error-pages/link-expired.html` | `gone.html` |
+| 429 | `/error-pages/rate-limit.html` | — |
+| 500 / 502 / 504 | `/error-pages/origin-502.html` | `internal_server_error.html` / `bad_gateway.html` / `gateway_timeout.html` |
+| 503 | `/error-pages/maintenance.html` | `service_unavailable.html` |
 
-اگر بعد از دیپلوی هنوز 404 پیش‌فرض آمد، در پنل Plesk:
+صفحات کمکی CDN (مستقیم قابل‌دسترسی):
+
+- `/error-pages/waf.html`
+- `/error-pages/captcha.html`
+- `/error-pages/js-challenge.html`
+- `/error-pages/link-invalid.html`
+
+تنظیمات:
+
+1. `public/.htaccess` → `ErrorDocument` برای Apache
+2. ورک‌فلو دیپلوی همان فایل‌ها را داخل `error_docs/` با نام‌های Plesk کپی می‌کند
+
+اگر بعد از دیپلوی هنوز صفحه پیش‌فرض آمد، در پنل:
 
 **Domains → دامنه → Apache & nginx Settings**
 
-- گزینه **Custom error documents** را روشن کنید، یا
-- در بخش **Additional nginx directives** این خط را بگذارید:
+- **Custom error documents** را روشن کنید
+- برای nginx:
 
 ```nginx
+error_page 403 /error-pages/firewall.html;
 error_page 404 /404.html;
+error_page 410 /error-pages/link-expired.html;
+error_page 429 /error-pages/rate-limit.html;
+error_page 500 /error-pages/origin-502.html;
+error_page 502 /error-pages/origin-502.html;
+error_page 503 /error-pages/maintenance.html;
+error_page 504 /error-pages/origin-502.html;
 ```
 
 ---
