@@ -1,6 +1,5 @@
 import React from "react"
 import { ibmPlexSans } from '@/lib/fonts'
-import { DeferredAnalytics } from '@/components/deferred-analytics'
 import { localeBootstrapScript } from '@/lib/locale-storage'
 import { defaultMetadata } from '@/lib/seo'
 import './globals.css'
@@ -26,7 +25,6 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased">
         {children}
-        <DeferredAnalytics />
       </body>
     </html>
   )
