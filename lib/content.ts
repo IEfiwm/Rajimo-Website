@@ -189,7 +189,7 @@ export const content = {
       title: "با ما در ارتباط باشید",
       description:
         "برای مشاوره، همکاری یا پرسیدن سوال درباره پروژه‌تان، فرم زیر را پر کنید یا مستقیم با ما تماس بگیرید.",
-      email: "contact@rajimo.ir",
+      email: "info@rajimo.ir",
       phones: ["+989127215825", "+989128501931"],
       emailLabel: "ایمیل",
       phoneLabel: "شماره تماس",
@@ -485,7 +485,7 @@ export const content = {
       title: "Get in Touch",
       description:
         "For consultation, collaboration, or questions about your project, fill out the form below or reach us directly.",
-      email: "contact@rajimo.ir",
+      email: "info@rajimo.ir",
       phones: ["+989127215825", "+989128501931"],
       emailLabel: "Email",
       phoneLabel: "Mobile",

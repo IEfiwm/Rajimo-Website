@@ -8,7 +8,7 @@ import { SiteFooter } from "@/components/site-footer"
 import { useLocale } from "@/components/use-locale"
 import { arrowBack } from "@/lib/content"
 
-const CONTACT_EMAIL = "contact@rajimo.ir"
+const CONTACT_EMAIL = "info@rajimo.ir"
 
 const inputClass =
   "w-full px-4 py-3 rounded-xl border border-black/[0.08] bg-white text-sm text-[#111] placeholder:text-black/30 outline-none transition-colors focus:border-black/20 focus:bg-[#fafaf8]"
