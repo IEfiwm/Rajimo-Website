@@ -7,7 +7,7 @@ Options -Indexes
   RewriteEngine On
 </IfModule>
 
-# ── HTTP error pages ──────────────────────────────────────────────
+# ── HTTP error pages (keep in sync with public/web.config + error-pages/routes.json)
 ErrorDocument 403 /error-pages/firewall.html
 ErrorDocument 404 /404.html
 ErrorDocument 410 /error-pages/link-expired.html

@@ -55,6 +55,7 @@ jobs:
           cp out/error-pages/*.html out/error_docs/
 
           test -f out/.htaccess && echo "htaccess ok" || echo "WARNING: .htaccess missing"
+          test -f out/web.config && echo "web.config ok" || echo "WARNING: web.config missing"
           ls -la out/error_docs | head -40
 
       - name: Deploy to host over FTP

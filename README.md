@@ -179,8 +179,10 @@ npm run version:major   # 0.3.0 → 1.0.0
 
 تنظیمات:
 
-1. `public/.htaccess` → `ErrorDocument` برای Apache
-2. ورک‌فلو دیپلوی همان فایل‌ها را داخل `error_docs/` با نام‌های Plesk کپی می‌کند
+1. `public/.htaccess` → Apache (`ErrorDocument`)
+2. `public/web.config` → IIS / Plesk Windows (`httpErrors`)
+3. `public/error-pages/routes.json` + `lib/error-pages.ts` → نقشه مرکزی مسیرها
+4. ورک‌فلو دیپلوی همان فایل‌ها را داخل `error_docs/` با نام‌های Plesk کپی می‌کند
 
 اگر بعد از دیپلوی هنوز صفحه پیش‌فرض آمد، در پنل:
 
@@ -200,6 +202,7 @@ error_page 503 /error-pages/maintenance.html;
 error_page 504 /error-pages/origin-502.html;
 ```
 
+برای IIS مطمئن شوید `web.config` در ریشه سایت (`httpdocs` / `public_html`) آپلود شده است.
 ---
 
 ## تنظیم Secrets در GitHub

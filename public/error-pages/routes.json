@@ -1,0 +1,51 @@
+{
+  "description": "Central map of HTTP errors → static pages (Apache .htaccess, IIS web.config, Plesk error_docs)",
+  "pages": {
+    "403": {
+      "path": "/error-pages/firewall.html",
+      "plesk": "forbidden.html",
+      "title": "Firewall / Forbidden"
+    },
+    "404": {
+      "path": "/404.html",
+      "plesk": "not_found.html",
+      "title": "Not Found"
+    },
+    "410": {
+      "path": "/error-pages/link-expired.html",
+      "plesk": "gone.html",
+      "title": "Gone / Link expired"
+    },
+    "429": {
+      "path": "/error-pages/rate-limit.html",
+      "plesk": null,
+      "title": "Rate limited"
+    },
+    "500": {
+      "path": "/error-pages/origin-502.html",
+      "plesk": "internal_server_error.html",
+      "title": "Internal Server Error"
+    },
+    "502": {
+      "path": "/error-pages/origin-502.html",
+      "plesk": "bad_gateway.html",
+      "title": "Bad Gateway"
+    },
+    "503": {
+      "path": "/error-pages/maintenance.html",
+      "plesk": "service_unavailable.html",
+      "title": "Service Unavailable / Maintenance"
+    },
+    "504": {
+      "path": "/error-pages/origin-502.html",
+      "plesk": "gateway_timeout.html",
+      "title": "Gateway Timeout"
+    }
+  },
+  "cdnPages": {
+    "waf": "/error-pages/waf.html",
+    "captcha": "/error-pages/captcha.html",
+    "jsChallenge": "/error-pages/js-challenge.html",
+    "linkInvalid": "/error-pages/link-invalid.html"
+  }
+}
