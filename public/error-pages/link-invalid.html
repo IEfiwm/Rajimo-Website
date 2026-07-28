@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لینک امن نامعتبر است</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --bg:#080B12;
+  --bg-elevated:#0E131D;
+  --grid-line: rgba(255,255,255,0.035);
+  --text:#EAF0F7;
+  --text-dim:#8792A3;
+  --text-faint:#4B5566;
+  --border: rgba(255,255,255,0.08);
+  --accent: #F5A623;
+  --accent-soft: rgba(245,166,35,0.12);
+  --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+  --sans: 'Vazirmatn', sans-serif;
+}
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; height:100%; }
+body{
+  background:
+    radial-gradient(1100px 600px at 82% -10%, rgba(76,141,255,0.10), transparent 60%),
+    radial-gradient(900px 500px at 10% 110%, var(--accent-soft), transparent 55%),
+    var(--bg);
+  background-attachment: fixed;
+  color:var(--text);
+  font-family:var(--sans);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  overflow-x:hidden;
+}
+.grid-overlay{
+  position:fixed; inset:0; pointer-events:none; z-index:0;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at 50% 40%, black, transparent 75%);
+}
+.signal-strip{
+  position:relative; width:100%; height:64px; overflow:hidden;
+  border-bottom:1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  z-index:1;
+}
+.signal-strip .track{
+  position:absolute; top:0; left:0; height:100%;
+  display:flex;
+  animation: scroll-left 9s linear infinite;
+}
+@keyframes scroll-left{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+.signal-strip svg{ display:block; height:64px; width:auto; flex:none; }
+.signal-strip path{
+  fill:none; stroke:var(--accent); stroke-width:1.6;
+  stroke-linecap:round; stroke-linejoin:round;
+  filter: drop-shadow(0 0 6px var(--accent));
+  opacity:0.85;
+}
+main{
+  position:relative; z-index:1; flex:1;
+  display:flex; align-items:center; justify-content:center;
+  padding: 32px 20px 80px;
+}
+.card{
+  width:100%; max-width:620px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding: 44px 40px 36px;
+  backdrop-filter: blur(6px);
+  position:relative; overflow:hidden;
+}
+.card::before{
+  content: attr(data-code);
+  position:absolute; left:-10px; bottom:-38px;
+  font-family:var(--mono); font-weight:700; font-size:150px; line-height:1;
+  color:rgba(255,255,255,0.025); letter-spacing:-4px; pointer-events:none;
+  direction:ltr; z-index:0;
+}
+.row-top{ position:relative; z-index:1; display:flex; align-items:center; gap:12px; margin-bottom:22px; }
+.icon-badge{
+  width:44px; height:44px; border-radius:12px;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--accent-soft);
+  border:1px solid var(--accent);
+  flex:none;
+}
+.icon-badge svg{ width:22px; height:22px; }
+.eyebrow{
+  font-family:var(--mono); direction:ltr; text-align:left; font-size:12px;
+  letter-spacing:0.14em; color:var(--text-dim);
+  display:flex; align-items:center; gap:8px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.eyebrow .code{ color:var(--accent); font-weight:600; }
+.eyebrow .dot{ width:5px; height:5px; border-radius:50%; background:var(--accent); flex:none; animation:blink 1.8s ease-in-out infinite; }
+@keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:0.25;} }
+h1{ position:relative; z-index:1; font-family:var(--sans); font-weight:800; font-size:28px; line-height:1.4; margin:0 0 14px; }
+p.desc{
+  position:relative; z-index:1; font-family:var(--sans); font-weight:400; font-size:15.5px;
+  line-height:1.9; color:var(--text-dim); margin:0 0 28px; max-width:50ch;
+}
+.divider{ height:1px; background:var(--border); margin:24px 0; position:relative; z-index:1; }
+.meta-row{
+  position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:22px;
+  font-family:var(--mono); font-size:12px; color:var(--text-faint); direction:ltr;
+}
+.meta-row .k{ color:var(--text-faint); }
+.meta-row .v{ color:var(--text-dim); }
+.actions{ position:relative; z-index:1; display:flex; gap:12px; margin-top:28px; flex-wrap:wrap; }
+.btn{
+  font-family:var(--sans); font-weight:600; font-size:14px; padding:11px 20px;
+  border-radius:10px; border:1px solid var(--border); background:transparent;
+  color:var(--text); cursor:pointer; transition: all 0.15s ease;
+}
+.btn.primary{ background:var(--accent); border-color:var(--accent); color:#08101f; }
+.btn:hover{ transform:translateY(-1px); filter:brightness(1.08); }
+.module{ position:relative; z-index:1; margin-top:8px; }
+.captcha-box{
+  display:flex; align-items:center; gap:14px;
+  border:1px solid var(--border); border-radius:12px; padding:16px 18px;
+  background:rgba(255,255,255,0.02);
+}
+.checkbox{
+  width:24px; height:24px; border-radius:6px; border:1.5px solid var(--text-faint);
+  flex:none; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition: all 0.15s ease;
+}
+.checkbox.checked{ background:var(--accent); border-color:var(--accent); }
+.checkbox svg{ width:14px; height:14px; opacity:0; transition:opacity 0.15s ease; stroke:#08101f; }
+.checkbox.checked svg{ opacity:1; }
+.captcha-box .label{ font-size:14px; color:var(--text); flex:1; }
+.captcha-box .brand{ font-family:var(--mono); font-size:10px; color:var(--text-faint); direction:ltr; }
+.spinner-wrap{ display:flex; align-items:center; gap:14px; }
+.spinner{
+  width:22px; height:22px; border-radius:50%;
+  border:2.5px solid var(--border); border-top-color:var(--accent);
+  animation: spin 0.9s linear infinite; flex:none;
+}
+@keyframes spin{ to{ transform:rotate(360deg); } }
+.spinner-label{ font-family:var(--mono); font-size:12.5px; color:var(--text-dim); direction:ltr; }
+.countdown{
+  font-family:var(--mono); font-size:13px; color:var(--text-dim);
+  display:flex; align-items:center; gap:10px; direction:ltr;
+}
+.countdown .bar{ width:160px; height:5px; border-radius:3px; background:var(--border); overflow:hidden; }
+.countdown .bar span{
+  display:block; height:100%; width:100%; background:var(--accent);
+  animation: drain 12s linear forwards;
+}
+@keyframes drain{ from{ width:100%; } to{ width:0%; } }
+footer{
+  position:relative; z-index:1; text-align:center; padding:18px;
+  font-family:var(--mono); font-size:11px; color:var(--text-faint);
+  direction:ltr; letter-spacing:0.04em;
+}
+@media (max-width:520px){
+  .card{ padding:32px 22px 30px; border-radius:16px; }
+  h1{ font-size:23px; }
+  .card::before{ font-size:100px; }
+}
+
+</style>
+</head>
+<body>
+<div class="grid-overlay"></div>
+
+<div class="signal-strip">
+  <div class="track">
+    <svg viewBox="0 0 900 64" width="900" height="64"><polyline points="0.0,32.0 6.4,44.5 12.9,37.4 19.3,32.4 25.7,41.4 32.1,39.5 38.6,22.9 45.0,20.1 51.4,30.9 57.9,29.0 64.3,22.1 70.7,30.7 77.1,17.7 83.6,24.9 90.0,32.9 96.4,25.8 102.9,26.4 109.3,42.3 115.7,45.7 122.1,33.2 128.6,32.1 135.0,25.0 141.4,34.4 147.9,47.4 154.3,40.1 160.7,29.2 167.1,34.6 173.6,35.7 180.0,21.2 186.4,17.5 192.9,31.4 199.3,35.2 205.7,36.0 212.1,29.0 218.6,16.4 225.0,23.8 231.4,36.9 237.9,33.1 244.3,29.9 250.7,42.5 257.1,46.4 263.6,31.6 270.0,38.6 276.4,31.0 282.9,35.1 289.3,46.8 295.7,39.7 302.1,24.8 308.6,27.3 315.0,32.8 321.4,22.7 327.9,18.5 334.3,33.7 340.7,22.2 347.1,30.5 353.6,29.4 360.0,18.9 366.4,25.4 372.9,41.4 379.3,39.8 385.7,32.0 392.1,39.3 398.6,43.7 405.0,35.1 411.4,44.5 417.9,35.6 424.3,33.3 430.7,42.5 437.1,37.1 443.6,20.8 450.0,21.7 456.4,31.9 462.9,27.3 469.3,22.5 475.7,27.7 482.1,17.5 488.6,27.1 495.0,32.5 501.4,24.6 507.9,28.5 514.3,44.5 520.7,44.0 527.1,31.6 533.6,33.4 540.0,25.2 546.4,37.3 552.9,47.7 559.3,37.5 565.7,29.1 572.1,35.9 578.6,34.0 585.0,19.0 591.4,19.2 597.9,33.4 604.3,34.1 610.7,36.2 617.1,26.4 623.6,16.0 630.0,26.5 636.4,37.5 642.9,31.7 649.3,31.2 655.7,44.6 662.1,44.8 668.6,29.2 675.0,37.7 681.4,30.3 687.9,37.4 694.3,47.2 700.7,36.8 707.1,23.8 713.6,28.9 720.0,32.0 726.4,20.7 732.9,20.1 739.3,36.4 745.7,23.0 752.1,31.6 758.6,27.6 765.0,18.4 771.4,28.4 777.9,42.7 784.3,38.0 790.7,32.1 797.1,41.2 803.6,42.3 810.0,37.9 816.4,43.9 822.9,34.0 829.3,34.7 835.7,43.2 842.1,34.3 848.6,19.3 855.0,23.6 861.4,32.3 867.9,25.7 874.3,23.7 880.7,24.8 887.1,18.0 893.6,29.1 900.0,31.7"/></svg>
+    <svg viewBox="0 0 900 64" width="900" height="64"><polyline points="0.0,32.0 6.4,44.5 12.9,37.4 19.3,32.4 25.7,41.4 32.1,39.5 38.6,22.9 45.0,20.1 51.4,30.9 57.9,29.0 64.3,22.1 70.7,30.7 77.1,17.7 83.6,24.9 90.0,32.9 96.4,25.8 102.9,26.4 109.3,42.3 115.7,45.7 122.1,33.2 128.6,32.1 135.0,25.0 141.4,34.4 147.9,47.4 154.3,40.1 160.7,29.2 167.1,34.6 173.6,35.7 180.0,21.2 186.4,17.5 192.9,31.4 199.3,35.2 205.7,36.0 212.1,29.0 218.6,16.4 225.0,23.8 231.4,36.9 237.9,33.1 244.3,29.9 250.7,42.5 257.1,46.4 263.6,31.6 270.0,38.6 276.4,31.0 282.9,35.1 289.3,46.8 295.7,39.7 302.1,24.8 308.6,27.3 315.0,32.8 321.4,22.7 327.9,18.5 334.3,33.7 340.7,22.2 347.1,30.5 353.6,29.4 360.0,18.9 366.4,25.4 372.9,41.4 379.3,39.8 385.7,32.0 392.1,39.3 398.6,43.7 405.0,35.1 411.4,44.5 417.9,35.6 424.3,33.3 430.7,42.5 437.1,37.1 443.6,20.8 450.0,21.7 456.4,31.9 462.9,27.3 469.3,22.5 475.7,27.7 482.1,17.5 488.6,27.1 495.0,32.5 501.4,24.6 507.9,28.5 514.3,44.5 520.7,44.0 527.1,31.6 533.6,33.4 540.0,25.2 546.4,37.3 552.9,47.7 559.3,37.5 565.7,29.1 572.1,35.9 578.6,34.0 585.0,19.0 591.4,19.2 597.9,33.4 604.3,34.1 610.7,36.2 617.1,26.4 623.6,16.0 630.0,26.5 636.4,37.5 642.9,31.7 649.3,31.2 655.7,44.6 662.1,44.8 668.6,29.2 675.0,37.7 681.4,30.3 687.9,37.4 694.3,47.2 700.7,36.8 707.1,23.8 713.6,28.9 720.0,32.0 726.4,20.7 732.9,20.1 739.3,36.4 745.7,23.0 752.1,31.6 758.6,27.6 765.0,18.4 771.4,28.4 777.9,42.7 784.3,38.0 790.7,32.1 797.1,41.2 803.6,42.3 810.0,37.9 816.4,43.9 822.9,34.0 829.3,34.7 835.7,43.2 842.1,34.3 848.6,19.3 855.0,23.6 861.4,32.3 867.9,25.7 874.3,23.7 880.7,24.8 887.1,18.0 893.6,29.1 900.0,31.7"/></svg>
+  </div>
+</div>
+
+<main>
+  <div class="card" data-code="403">
+    <div class="row-top">
+      <div class="icon-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#F5A623" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" fill="none" stroke-width="1.6"/><path d="M9 9l6 6M15 9l-6 6" stroke-width="1.6"/></svg>
+      </div>
+      <div class="eyebrow"><span class="dot"></span><span>SECURE LINK INVALID</span> <span class="code">HTTP 403</span></div>
+    </div>
+
+    <h1>لینک امن نامعتبر است</h1>
+    <p class="desc">نشانی وارد شده معتبر نیست یا تغییر یافته است. لطفاً لینک را مجدداً و از منبع اصلی دریافت کنید.</p>
+
+    <div class="module"></div>
+
+    <div class="actions">
+      <button class="btn primary">بازگشت به صفحه اصلی</button>
+    </div>
+
+    <div class="divider"></div>
+    <div class="meta-row">
+      <span><span class="k">ref</span> <span class="v">BB3B-1DB2</span></span>
+      <span><span class="k">time</span> <span class="v" id="timeStamp"></span></span>
+      <span><span class="k">node</span> <span class="v">edge-fra-03</span></span>
+    </div>
+  </div>
+</main>
+
+<footer>rajimo.ir · network status</footer>
+
+<script>
+function pad(n){ return n.toString().padStart(2,'0'); }
+const now = new Date();
+document.getElementById('timeStamp').textContent =
+  `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+</script>
+</body>
+</html>

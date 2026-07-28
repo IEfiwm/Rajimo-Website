@@ -233,6 +233,15 @@ export const content = {
         { label: "تماس با ما", href: "/contact/" },
       ],
     },
+    notFound: {
+      code: "۴۰۴",
+      title: "این مسیر به جایی نمی‌رسد.",
+      description:
+        "صفحه‌ای که دنبالش هستید وجود ندارد، منتقل شده، یا آدرس اشتباه وارد شده است.",
+      home: "بازگشت به خانه",
+      contact: "تماس با ما",
+      solutions: "مشاهده راهکارها",
+    },
     liveFeed: {
       items: [
         {
@@ -519,6 +528,15 @@ export const content = {
         { label: "Terms", href: "#" },
         { label: "Contact Us", href: "/contact/" },
       ],
+    },
+    notFound: {
+      code: "404",
+      title: "This path leads nowhere.",
+      description:
+        "The page you're looking for doesn't exist, has moved, or the address was typed incorrectly.",
+      home: "Back to home",
+      contact: "Contact us",
+      solutions: "View solutions",
     },
     liveFeed: {
       items: [
