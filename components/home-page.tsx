@@ -13,18 +13,12 @@ import { SiteFooter } from "@/components/site-footer"
 import { useLocale } from "@/components/use-locale"
 import { arrowForward } from "@/lib/content"
 import { shouldSkipIntro } from "@/lib/intro-prefs"
+import { WORKFLOW_IMAGES } from "@/lib/hero-media"
 
 const DevExSection = dynamic(
   () => import("@/components/devex-section").then((mod) => mod.DevExSection),
   { ssr: true }
 )
-
-const WORKFLOW_IMAGES = [
-  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/define-5aafAmGBrxZpOqJ3XLHY3n3qzC2I5K.png",
-  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/compose-5RT5VR4f1Y3GoFmovqTKLTG4UXp3g2.png",
-  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/test-zm8guZwxJHtwWsJ7XO4B0CF7GzlNK8.png",
-  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/deploy-an8fgHSLzniojkcmRyGGIFQUJF9T5J.png",
-]
 
 export function HomePage() {
   const { locale, toggleLocale, t } = useLocale()
