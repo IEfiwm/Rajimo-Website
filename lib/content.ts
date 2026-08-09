@@ -261,7 +261,7 @@ export const content = {
         },
         {
           name: "ولورا",
-          description: "سیستم ERP",
+          description: "مدیریت کسب‌وکار",
           status: { label: "در حال اجرا", color: "#4ade80" },
         },
         {
@@ -557,7 +557,7 @@ export const content = {
         },
         {
           name: "Velora",
-          description: "ERP system",
+          description: "Business management",
           status: { label: "In progress", color: "#4ade80" },
         },
         {

@@ -17,6 +17,7 @@ export type ProjectsPageContent = {
   description: string
   backHome: string
   visitSite: string
+  visitLanding: string
   openInNewTab: string
 }
 
@@ -34,6 +35,7 @@ export const projectsData: Record<Locale, ProjectsLocale> = {
         "نمونه‌ای از پلتفرم‌ها و وب‌سایت‌هایی که طراحی و توسعه داده‌ایم — از فروشگاه آنلاین تا سیستم‌های سازمانی.",
       backHome: "بازگشت به صفحه اصلی",
       visitSite: "مشاهده پروژه",
+      visitLanding: "مشاهده صفحه محصول",
       openInNewTab: "باز کردن در تب جدید",
     },
     items: [
@@ -56,7 +58,7 @@ export const projectsData: Record<Locale, ProjectsLocale> = {
       {
         id: "velora",
         name: "ولورا",
-        description: "سیستم ERP یکپارچه مدیریت کسب‌وکار",
+        description: "سیستم مدیریت کسب‌وکار — فروش، انبار و مالی",
         url: "https://velora.rajimo.ir/",
         displayUrl: "velora.rajimo.ir",
         image: "/images/projects/velora.png",
@@ -88,6 +90,7 @@ export const projectsData: Record<Locale, ProjectsLocale> = {
         "A selection of platforms and websites we've designed and built — from e-commerce to enterprise systems.",
       backHome: "Back to home",
       visitSite: "View project",
+      visitLanding: "View product page",
       openInNewTab: "Open in new tab",
     },
     items: [
@@ -110,7 +113,7 @@ export const projectsData: Record<Locale, ProjectsLocale> = {
       {
         id: "velora",
         name: "Velora",
-        description: "Integrated ERP business management system",
+        description: "Business management — sales, inventory, and finance",
         url: "https://velora.rajimo.ir/",
         displayUrl: "velora.rajimo.ir",
         image: "/images/projects/velora.png",

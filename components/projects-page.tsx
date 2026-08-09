@@ -48,46 +48,46 @@ export function ProjectsPage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8" onMouseMove={handleMouse}>
-            {items.map((project, i) => (
-              <BentoCard key={project.id} className="p-5 md:p-6" delay={i * 80}>
-                <BrowserMockup
-                  project={project}
-                  visitLabel={page.visitSite}
-                  openLabel={page.openInNewTab}
-                />
-                <div className="mt-5 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 text-center sm:text-start">
-                  <div>
-                    <h2 className="text-lg font-light">
-                      {project.landingPath ? (
-                        <a href={project.landingPath} className="hover:text-black/70 transition-colors">
+            {items.map((project, i) => {
+              const primaryHref = project.landingPath ?? project.url
+              const visitLabel = project.landingPath ? page.visitLanding : page.visitSite
+              const openLabel = project.landingPath ? page.visitLanding : page.openInNewTab
+
+              return (
+                <BentoCard key={project.id} className="p-5 md:p-6" delay={i * 80}>
+                  <BrowserMockup
+                    project={project}
+                    visitLabel={visitLabel}
+                    openLabel={openLabel}
+                  />
+                  <div className="mt-5 flex flex-col sm:flex-row items-start justify-between gap-4">
+                    <div className="min-w-0">
+                      <h2 className="text-lg font-light">
+                        <a
+                          href={primaryHref}
+                          {...(!project.landingPath
+                            ? { target: "_blank", rel: "noopener noreferrer" }
+                            : {})}
+                          className="hover:text-black/70 transition-colors"
+                        >
                           {project.name}
                         </a>
-                      ) : (
-                        project.name
-                      )}
-                    </h2>
-                    <p className="text-sm text-black/45 mt-1 leading-relaxed">{project.description}</p>
-                    {project.landingPath && (
-                      <a
-                        href={project.landingPath}
-                        className="inline-block mt-2 text-[11px] text-black/40 hover:text-black/70 transition-colors tracking-wide"
-                      >
-                        {locale === "fa" ? "مشاهده صفحه محصول" : "View product page"}
-                      </a>
-                    )}
+                      </h2>
+                      <p className="text-sm text-black/45 mt-1 leading-relaxed">{project.description}</p>
+                    </div>
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="shrink-0 text-[11px] text-black/35 hover:text-black/70 transition-colors tracking-wide pt-1"
+                      dir="ltr"
+                    >
+                      {project.displayUrl} ↗
+                    </a>
                   </div>
-                  <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="shrink-0 text-[11px] text-black/35 hover:text-black/70 transition-colors tracking-wide pt-1"
-                    dir="ltr"
-                  >
-                    {project.displayUrl} ↗
-                  </a>
-                </div>
-              </BentoCard>
-            ))}
+                </BentoCard>
+              )
+            })}
           </div>
         </div>
       </main>

@@ -6,7 +6,7 @@
 - تایپوگرافی و خوانایی فارسی
 - لندینگ مدرن با بخش‌های محصول، فرآیند، صنایع و پروژه‌های فعال
 
-نسخه فعلی پروژه: **v0.3.0**
+نسخه فعلی پروژه: **v0.4.0**
 
 ---
 
@@ -113,14 +113,23 @@ NEXT_PUBLIC_SITE_URL=https://rajimo.ir
 ### اسکریپت‌های ورژن
 
 ```bash
-npm run version:patch   # 0.3.0 → 0.3.1
-npm run version:minor   # 0.3.0 → 0.4.0
-npm run version:major   # 0.3.0 → 1.0.0
+npm run version:patch   # 0.4.0 → 0.4.1
+npm run version:minor   # 0.4.0 → 0.5.0
+npm run version:major   # 0.4.0 → 1.0.0
 ```
 
 بعد از هر تغییر قابل‌انتشار، ورژن را بالا ببرید و در [CHANGELOG](#changelog) ثبت کنید.
 
 ### CHANGELOG
+
+#### v0.4.0
+
+- صفحه لندینگ محصول Velora در `/products/velora/` (دوزبانه، SEO و schema)
+- اتصال کارت پروژه ولورا به صفحه محصول
+- شماره ثابت `02191035689` در تماس و SEO
+- تصاویر workflow لوکال به‌جای CDN خارجی
+- صفحات خطای هاست (`.htaccess` / `web.config` / `error_docs`) و دیپلوی موازی FTP با lftp
+- حذف `@vercel/analytics` (ناسازگار با هاست استاتیک)
 
 #### v0.3.0
 

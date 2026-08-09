@@ -7,14 +7,14 @@ import { veloraData, VELORA_LIVE_URL, VELORA_PATH } from "@/lib/velora-data"
 const page = veloraData.fa
 
 export const metadata = createPageMetadata({
-  title: "ولورا — ERP عمده‌فروشی پوشاک",
+  title: "ولورا — سیستم مدیریت کسب‌وکار",
   description: page.heroDescription,
   path: VELORA_PATH,
   keywords: [
     "ولورا",
     "Velora",
     "ERP",
-    "عمده‌فروشی پوشاک",
+    "نرم‌افزار مدیریت کسب‌وکار",
     "نرم‌افزار انبار",
     "فاکتور فروش",
     "راجیمو",
