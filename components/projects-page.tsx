@@ -57,8 +57,24 @@ export function ProjectsPage() {
                 />
                 <div className="mt-5 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 text-center sm:text-start">
                   <div>
-                    <h2 className="text-lg font-light">{project.name}</h2>
+                    <h2 className="text-lg font-light">
+                      {project.landingPath ? (
+                        <a href={project.landingPath} className="hover:text-black/70 transition-colors">
+                          {project.name}
+                        </a>
+                      ) : (
+                        project.name
+                      )}
+                    </h2>
                     <p className="text-sm text-black/45 mt-1 leading-relaxed">{project.description}</p>
+                    {project.landingPath && (
+                      <a
+                        href={project.landingPath}
+                        className="inline-block mt-2 text-[11px] text-black/40 hover:text-black/70 transition-colors tracking-wide"
+                      >
+                        {locale === "fa" ? "مشاهده صفحه محصول" : "View product page"}
+                      </a>
+                    )}
                   </div>
                   <a
                     href={project.url}

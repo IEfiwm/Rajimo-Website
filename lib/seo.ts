@@ -32,6 +32,7 @@ export const staticRoutes = [
   "/",
   "/solutions/",
   "/projects/",
+  "/products/velora/",
   "/contact/",
 ] as const
 

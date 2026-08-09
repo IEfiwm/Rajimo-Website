@@ -7,6 +7,8 @@ export type ProjectItem = {
   url: string
   displayUrl: string
   image: string
+  /** Optional on-site product landing (e.g. /products/velora/) */
+  landingPath?: string
 }
 
 export type ProjectsPageContent = {
@@ -58,6 +60,7 @@ export const projectsData: Record<Locale, ProjectsLocale> = {
         url: "https://velora.rajimo.ir/",
         displayUrl: "velora.rajimo.ir",
         image: "/images/projects/velora.png",
+        landingPath: "/products/velora/",
       },
       {
         id: "lumora",
@@ -111,6 +114,7 @@ export const projectsData: Record<Locale, ProjectsLocale> = {
         url: "https://velora.rajimo.ir/",
         displayUrl: "velora.rajimo.ir",
         image: "/images/projects/velora.png",
+        landingPath: "/products/velora/",
       },
       {
         id: "lumora",
