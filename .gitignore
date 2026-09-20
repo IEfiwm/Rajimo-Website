@@ -78,4 +78,5 @@ Thumbs.db
 
 # Misc
 .env*.backup
+package-lock.json
 pnpm-lock.yaml
