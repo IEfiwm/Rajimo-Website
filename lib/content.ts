@@ -245,14 +245,14 @@ export const content = {
     liveFeed: {
       items: [
         {
-          name: "داریک",
+          name: "عیار",
           description: "پلتفرم معاملات فلزات گران‌بها",
-          status: { label: "فعال", color: "#60a5fa" },
+          status: { label: "در حال اجرا", color: "#4ade80" },
         },
         {
           name: "ارسی انیمه",
           description: "پلتفرم استریم انیمه",
-          status: { label: "در حال اجرا", color: "#4ade80" },
+          status: { label: "فعال", color: "#60a5fa" },
         },
         {
           name: "آی تی اداری",
@@ -262,7 +262,7 @@ export const content = {
         {
           name: "ولورا",
           description: "مدیریت کسب‌وکار",
-          status: { label: "در حال اجرا", color: "#4ade80" },
+          status: { label: "فعال", color: "#60a5fa" },
         },
         {
           name: "ارسی انیمه",
@@ -541,14 +541,14 @@ export const content = {
     liveFeed: {
       items: [
         {
-          name: "Daric",
+          name: "Ayar",
           description: "Precious metals trading platform",
-          status: { label: "Active", color: "#60a5fa" },
+          status: { label: "In progress", color: "#4ade80" },
         },
         {
           name: "Arsi Anime",
           description: "Anime streaming platform",
-          status: { label: "In progress", color: "#4ade80" },
+          status: { label: "Active", color: "#60a5fa" },
         },
         {
           name: "IT Edari",
@@ -558,7 +558,7 @@ export const content = {
         {
           name: "Velora",
           description: "Business management",
-          status: { label: "In progress", color: "#4ade80" },
+          status: { label: "Active", color: "#60a5fa" },
         },
         {
           name: "Arsi Anime",
