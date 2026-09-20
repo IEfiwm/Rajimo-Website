@@ -125,7 +125,7 @@ npm run version:major   # 0.4.1 → 1.0.0
 #### v0.4.1
 
 - رفع خطای CI در Install dependencies: پین `react` / `react-dom` روی `19.2.8` (ناسازگاری peer با `@react-three/fiber` و React 19.3)
-- دیپلوی: `npm ci` + کش npm؛ `package-lock.json` دوباره در مخزن track می‌شود
+- دیپلوی با `npm install` (بدون commit کردن `package-lock.json`)
 - وضعیت پروژه‌های live feed: عیار (به‌جای داریک) در حال اجرا؛ ارسی انیمه، بات ارسی و ولورا فعال
 - بهبود کپی و بخش‌های لندینگ Velora (عمومی‌تر، چارت ساده‌تر، گالری کامل‌تر)
 
@@ -163,7 +163,7 @@ npm run version:major   # 0.4.1 → 1.0.0
 
 1. Checkout مخزن
 2. نصب Node.js 20
-3. `npm ci`
+3. `npm install`
 4. `npm run build`
 5. آماده‌سازی 404 برای Plesk (`error_docs/not_found.html` + `.htaccess`)
 6. آپلود خروجی روی هاست با FTP
