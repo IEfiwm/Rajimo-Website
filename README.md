@@ -6,7 +6,7 @@
 - تایپوگرافی و خوانایی فارسی
 - لندینگ مدرن با بخش‌های محصول، فرآیند، صنایع و پروژه‌های فعال
 
-نسخه فعلی پروژه: **v0.4.0**
+نسخه فعلی پروژه: **v0.4.1**
 
 ---
 
@@ -113,14 +113,21 @@ NEXT_PUBLIC_SITE_URL=https://rajimo.ir
 ### اسکریپت‌های ورژن
 
 ```bash
-npm run version:patch   # 0.4.0 → 0.4.1
-npm run version:minor   # 0.4.0 → 0.5.0
-npm run version:major   # 0.4.0 → 1.0.0
+npm run version:patch   # 0.4.1 → 0.4.2
+npm run version:minor   # 0.4.1 → 0.5.0
+npm run version:major   # 0.4.1 → 1.0.0
 ```
 
 بعد از هر تغییر قابل‌انتشار، ورژن را بالا ببرید و در [CHANGELOG](#changelog) ثبت کنید.
 
 ### CHANGELOG
+
+#### v0.4.1
+
+- رفع خطای CI در Install dependencies: پین `react` / `react-dom` روی `19.2.8` (ناسازگاری peer با `@react-three/fiber` و React 19.3)
+- دیپلوی: `npm ci` + کش npm؛ `package-lock.json` دوباره در مخزن track می‌شود
+- وضعیت پروژه‌های live feed: عیار (به‌جای داریک) در حال اجرا؛ ارسی انیمه، بات ارسی و ولورا فعال
+- بهبود کپی و بخش‌های لندینگ Velora (عمومی‌تر، چارت ساده‌تر، گالری کامل‌تر)
 
 #### v0.4.0
 
@@ -156,7 +163,7 @@ npm run version:major   # 0.4.0 → 1.0.0
 
 1. Checkout مخزن
 2. نصب Node.js 20
-3. `npm install`
+3. `npm ci`
 4. `npm run build`
 5. آماده‌سازی 404 برای Plesk (`error_docs/not_found.html` + `.htaccess`)
 6. آپلود خروجی روی هاست با FTP
